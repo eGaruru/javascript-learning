@@ -1,9 +1,9 @@
-//
+// Variables
 
 // var example
-var name = "Emiko";
-name = "Emily";
-console.log(name);
+var firstName = "Emiko";
+firstName = "Emily";
+console.log(firstName);
 
 // let example
 let age = 30;

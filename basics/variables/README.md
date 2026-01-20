@@ -21,6 +21,14 @@
 - Has function scope
 - Can cause unexpected behavior
 
+### ⚠ Variables without declaration — must be avoided
+
+- Creates an implicit global variable
+- The variable becomes a property of the global object
+- Can cause unexpected behavior and bugs
+
+> 💡 Best practice: Always use `const` by default, and use `let` only when reassignment is necessary.
+
 ## Files
 
 - index.js

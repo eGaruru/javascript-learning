@@ -3,8 +3,21 @@
 ## What I learned
 
 - JavaScript provides three ways to declare variables: let, const, var
+- What variables are and what advantages they have
 - How to declare variables
 - Variable naming rules and conventions
+
+## Variable
+
+- Variables store values
+- Variables are like labeled boxes that store values
+  > 💡 Variable names (labels) should clearly describe the stored value
+
+### Advantages of the variable
+
+- Reusable and easy to modify
+  - Variables can be reused any number of times
+  - Changing the value updates all references automatically
 
 ## Variable Declaration
 
@@ -31,7 +44,7 @@
 - The variable becomes a property of the global object
 - Can cause unexpected behavior and bugs
 
-> 💡 Best practice: Always use `const` by default, and use `let` only when reassignment is necessary.
+> 💡 Best practice: Always use `const` by default, and use `let` only when reassignment is necessary
 
 ### Multiple variables can be declared at the same time
 
@@ -44,8 +57,12 @@
 - Variable names must start with a letter, `_`, or `$`
 - Variable names cannot start with a number
 - Variable names are case-sensitive
+- Variable names cannot contain spaces
 
 ## Naming Conventions
+
+- Use camelCase for variables
+- Use ALL_CAPS for immutable constants (e.g. PI)
 
 ## Files
 

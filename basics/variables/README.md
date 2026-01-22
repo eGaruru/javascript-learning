@@ -3,6 +3,10 @@
 ## What I learned
 
 - JavaScript provides three ways to declare variables: let, const, var
+- How to declare variables
+- Variable naming rules and conventions
+
+## Variable Declaration
 
 ### `let` — use only when a value must change
 
@@ -28,6 +32,20 @@
 - Can cause unexpected behavior and bugs
 
 > 💡 Best practice: Always use `const` by default, and use `let` only when reassignment is necessary.
+
+### Multiple variables can be declared at the same time
+
+- Multiple variables can be declared in a single statement
+- Related variables can be declared together, making code easier to read and initialize
+- Useful for grouping constants (`const`)
+
+## Variable Naming Rules
+
+- Variable names must start with a letter, `_`, or `$`
+- Variable names cannot start with a number
+- Variable names are case-sensitive
+
+## Naming Conventions
 
 ## Files
 

@@ -39,10 +39,42 @@
 
 ## Comparison Operators
 
-- `=== !== > < >= <=`
+- `== === != !== > < >= <=`
+- Use to compare two values
 - Always return boolean values, `true` or `false`
-- Very useful when taking decisions based on conditions
-- The result should be stored in a variable
+- Very useful when taking decisions based on conditions(if / else, for / while)
+- The result can be used directly in conditions or stored in a variable
+- Strings are compared alphabetically(Unicode)
+
+- `==` vs `===`, `!=` vs `!==`
+  - `==`, `!=` only compare values ​​and does not take into account differences in data types
+  - `===`, `!==` compare values and data types, judge strictly
+
+> 💡 Best practice: Always use `===`, `!==` by default to avoid to misjudgment
+
+- Comparing different types
+  - When using `==`, JavaScript performs type coercion (automatic type conversion)
+  - For `>` and `<`:
+    - If both values are strings → string (Unicode) comparison
+    - Otherwise → values are converted to numbers
+  - Empty string converts to `0`
+  - A non-numeric string converts to NaN which is always false
+
+### ⚠ How string comparison works
+
+When comparing strings using `>` or `<`, JavaScript compares characters based on their Unicode values, not dictionary order
+
+- Uppercase letters come before lowercase letters (`"A" < "a"` → true)
+- `"20" > "3"` is false because it compares strings, not numbers
+
+### ⚠ Special cases
+
+- `NaN` is not equal to anything, even itself  
+  `NaN === NaN` → false
+
+- `null` and `undefined` are equal only with `==`  
+  `null == undefined` → true  
+  `null === undefined` → false
 
 ## Logical Operators
 

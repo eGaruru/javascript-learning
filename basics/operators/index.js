@@ -116,6 +116,76 @@ m ??= 100;
 console.log(m); // Hello
 
 // Comparison Operators---
+// == equal to
+const isEqual = 2 == 2; // true
+const isEqualLoose = 2 == "2"; // true
+console.log(isEqual);
+console.log(isEqualLoose);
+
+// === equal value and equal type
+const isStrictEqual = 2 === 2; // true
+const isStrictEqualFalse = 2 === "2"; // false
+console.log(isStrictEqual);
+console.log(isStrictEqualFalse);
+
+// != not equal
+const isNotEqual = 2 != 3; // true
+const isNotEqualLoose = 2 != "2"; // false
+console.log(isNotEqual);
+console.log(isNotEqualLoose);
+
+// !== not equal value or not equal type
+const isStrictNotEqual = 2 !== 3; // true
+const isStrictNotEqualTrue = 2 !== "2"; // true
+console.log(isStrictNotEqual);
+console.log(isStrictNotEqualTrue);
+
+// > greater than
+const isGreater = 3 > 2; // true
+const isGreaterFalse = 2 > 3; // false
+console.log(isGreater);
+console.log(isGreaterFalse);
+
+// < less than
+const isLess = 2 < 3; // true
+const isLessFalse = 3 < 2; // false
+console.log(isLess);
+console.log(isLessFalse);
+
+// >= greater than or equal to
+const isGreaterOrEqual = 3 >= 2; // true
+const isGreaterOrEqualEqual = 2 >= 2; // true
+const isGreaterOrEqualFalse = 2 >= 3; // false
+console.log(isGreaterOrEqual);
+console.log(isGreaterOrEqualEqual);
+console.log(isGreaterOrEqualFalse);
+
+// <= less than or equal to
+const isLessOrEqual = 2 <= 3; // true
+const isLessOrEqualEqual = 2 <= 2; // true
+const isLessOrEqualFalse = 3 <= 2; // false
+console.log(isLessOrEqual);
+console.log(isLessOrEqualEqual);
+console.log(isLessOrEqualFalse);
+
+// strings are compared based on Unicode values (not dictionary order)
+const isUnicodeLess = "apple" < "banana"; // true
+const isUnicodeGreater = "banana" > "apple"; // true
+const isNotUnicodeGreater = "apple" > "banana"; // false
+console.log(isUnicodeLess);
+console.log(isUnicodeGreater);
+console.log(isNotUnicodeGreater);
+
+// Compareing different types---
+console.log(5 > "3"); // true "3" is converted to number 3
+console.log("5" > 10); // false "5" is converted to number 5
+console.log("abc" < "abd"); // true
+console.log("apple" > 2); // false "apple" is converted to NaN
+console.log("20" > "3"); // false "2" is less than "3" in string comparison
+console.log(1 > ""); // true "" is converted to 0
+console.log(NaN === NaN); // false NaN is not equal to anything, including itself
+console.log(null == undefined); // true only with loose equality
+console.log(null === undefined); // false
 
 // Logical Operators---
 

@@ -1,6 +1,9 @@
 // JavaScript Operators
 
-// Arithmetic Operators---
+// ------------------------------------------------------------
+// 1) Arithmetic Operators-
+// ------------------------------------------------------------
+
 const x = 10;
 const y = 5;
 
@@ -37,7 +40,10 @@ console.log(w, wAssigned); // 9, 10
 wAssigned = --w; // w is decremented first, then assigned
 console.log(w, wAssigned); // 8, 8
 
-// Assignment Operators---
+// ------------------------------------------------------------
+// 2) Assignment Operators-
+// ------------------------------------------------------------
+
 // =
 const a = 1;
 const b = a + 1; // 2
@@ -115,7 +121,10 @@ m = "Hello";
 m ??= 100;
 console.log(m); // Hello
 
-// Comparison Operators---
+// ------------------------------------------------------------
+// 3) Comparison Operators-
+// ------------------------------------------------------------
+
 // == equal to
 const isEqual = 2 == 2; // true
 const isEqualLoose = 2 == "2"; // true
@@ -187,6 +196,37 @@ console.log(NaN === NaN); // false NaN is not equal to anything, including itsel
 console.log(null == undefined); // true only with loose equality
 console.log(null === undefined); // false
 
-// Logical Operators---
+// ------------------------------------------------------------
+// 4) Logical Operators-
+// ------------------------------------------------------------
+
+// && AND
+console.log(true && true); // true
+console.log(true && false); // false
+console.log(false && true); // false (right side is not evaluated)
+
+// || OR
+console.log(true || false); // true (right side is not evaluated)
+console.log(false || true); // true
+console.log(false || false); // false
+
+// ! NOT
+console.log(!true); // false
+console.log(!false); // true
+console.log(!"true"); // false
+console.log(!0); // true
+
+// AND returns the first falsy value or the last value
+console.log("Hello," && "World!"); // World!
+console.log({} && "World!"); // World!
+console.log("" && "World!"); // ""
+console.log(false && "World!"); // false
+
+// OR returns the first truthy value or the last value
+console.log(0 || "Guest"); // Guest
+console.log("User" || "Guest"); // User
+console.log([] || "Guest"); // []
+console.log(true || "Guest"); // true
+console.log(false || undefined); // undefined
 
 // Ternary Operator---

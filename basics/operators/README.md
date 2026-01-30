@@ -11,6 +11,8 @@
 
 > 💡Operators are used to transform values, combine multiple values, or perform various operations on values
 
+> 💡 console.log can display multiple values ​​at the same time
+
 ## Arithmetic Operators
 
 - `+ - * ** / % ++ --`
@@ -47,7 +49,7 @@
 - Strings are compared alphabetically(Unicode)
 
 - `==` vs `===`, `!=` vs `!==`
-  - `==`, `!=` only compare values ​​and does not take into account differences in data types
+  - `==`, `!=` only compare values ​​and do not take into account differences in data types
   - `===`, `!==` compare values and data types, judge strictly
 
 > 💡 Best practice: Always use `===`, `!==` by default to avoid to misjudgment
@@ -79,13 +81,31 @@ When comparing strings using `>` or `<`, JavaScript compares characters based on
 ## Logical Operators
 
 - `&& || !`
-- Used in conditions
+- Commonly used in conditions
+- Logical operators return one of the operands, not just Boolean
+  - With non-Boolean operands, they return one of the operands (not a boolean)
+  - Boolean operands are used -> may returns Booleans
+
+- `&&`(AND) returns the first falsy value or the last value
+- `||`(OR) returns the first truthy value or the last value
+- `!`(NOT) converts a value to Boolean and negates it
+
+### What is an Operand?
+
+- An **operand** is the data (the "what") that an operator acts on
+- **Example:** `const x = 5 + 8;`
+  - `5` and `8` are the **operands**.
+  - `+` and `=` are the **operators**.
 
 ## Ternary Operator
 
 - `condition ? value1 : value2`
 
-> 💡 console.log can display multiple values ​​at the same time
+> 💡 **Tip:** Operators can be classified by the number of operands they take:
+>
+> - **Unary operator:** Takes 1 operand (e.g., `x++`, `!true`)
+> - **Binary operator:** Takes 2 operands (e.g., `5 + 8`, `x > y`)
+> - **Ternary operator:** Takes 3 operands (e.g., `condition ? a : b`)
 
 ## Files
 

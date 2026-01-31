@@ -197,7 +197,7 @@ console.log(null == undefined); // true only with loose equality
 console.log(null === undefined); // false
 
 // ------------------------------------------------------------
-// 4) Logical Operators-
+// 4-1) Logical Operators-
 // ------------------------------------------------------------
 
 // && AND
@@ -229,4 +229,101 @@ console.log([] || "Guest"); // []
 console.log(true || "Guest"); // true
 console.log(false || undefined); // undefined
 
-// Ternary Operator---
+// Short-Circuit -------
+function logAndReturn(value) {
+  console.log("evaluated ->", value);
+  return value;
+}
+
+// AND
+console.log(false && logAndReturn("right side")); // false (right not evaluated, function is not executed)
+console.log(true && logAndReturn("right side"));
+
+// OR
+console.log(true || logAndReturn("right side")); // true (right not evaluated, function is not executed)
+console.log(false || logAndReturn("right side"));
+
+// ------------------------------------------------------------
+// 4-2) Logical Operators(Continued) - Practical Use of
+// ------------------------------------------------------------
+
+// A) Guard pattern
+function processData(data) {
+  if (!data) {
+    console.log("No data found!"); // Stops execution if data is falsy
+    return;
+  }
+  console.log("Processing:", data);
+}
+
+let loginUser = null;
+processData(loginUser && loginUser.userName); // safe: right side not evaluate
+loginUser = { userName: "eGaruru" };
+processData(loginUser && loginUser.userName); // Processing: eGaruru
+
+const user = {}; // {} is truthy
+processData(user && user.userName); // userName is undefined -> No data found!
+
+// B) Toggling a boolean value
+function switchVisible(isVisible) {
+  return !isVisible;
+}
+
+let isVisible = true;
+isVisible = switchVisible(isVisible);
+console.log("Menu is visible: " + isVisible);
+
+// C) check the length, avoid to display 0
+const items = [];
+if (!items.length) {
+  console.log("No items found");
+}
+
+// D) Setting default value
+function greet(firstName) {
+  const name = firstName || "Guest"; // If firstName is falsy, it uses Guest
+  console.log(`Hello, ${name}!`);
+}
+
+greet(); // Hello, Guest!
+greet("eGaruru"); // Hello, eGaruru!
+
+function setHitPoint(restPoint) {
+  const hp = restPoint ?? 100; // If restPoint is null or undefined -> 100
+  if (Number.isNaN(Number(hp))) return 100; // NaN -> 100
+  if (hp === "") return 100; // "" -> 100 (when want to except 0, use !hp)
+  return hp;
+}
+
+const robo1 = { hp: setHitPoint(null) }; // 100
+const robo2 = { hp: setHitPoint(undefined) }; // 100
+const robo3 = { hp: setHitPoint("0") }; // 0
+const robo4 = { hp: setHitPoint("") }; // 100
+const robo5 = { hp: setHitPoint("aaa") }; // 100
+const robo6 = { hp: setHitPoint(55) }; // 55
+const robo7 = { hp: setHitPoint(0) }; // 100
+console.log(
+  robo1.hp,
+  robo2.hp,
+  robo3.hp,
+  robo4.hp,
+  robo5.hp,
+  robo6.hp,
+  robo7.hp,
+);
+
+// E) Double NOT (!!) to force Boolean type
+console.log(!!0); // false
+console.log(!!"0"); // true
+
+const cartItems = 0;
+const hasItems = !!cartItems; // 0 (falsy) -> !0 (true) -> !true (false)
+console.log("Has cartItems:" + hasItems); // false
+
+const currentUserName = "eGaruru";
+const hasName = !!currentUserName; // Convert string to true
+console.log("Has currentUserName:", hasName); // Has currentUserName: true
+
+// ------------------------------------------------------------
+// 5) Ternary Operators-
+// ------------------------------------------------------------

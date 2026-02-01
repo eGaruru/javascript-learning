@@ -17,7 +17,7 @@
 
 - `+ - * ** / % ++ --`
 - Used for calculations
-- `+` can use to combine string
+- `+` can be used to combine strings
 - `++` and `--` are arithmetic operators with side effects (they reassign a new value)
   - They require a mutable variable (`let`) and cannot be used with `const`
   - In an expression, `i++` and `i--` return the value **before** increment/decrement
@@ -81,14 +81,47 @@ When comparing strings using `>` or `<`, JavaScript compares characters based on
 ## Logical Operators
 
 - `&& || !`
-- Commonly used in conditions
+- Used for conditions and control flow
 - Logical operators return one of the operands, not just Boolean
   - With non-Boolean operands, they return one of the operands (not a boolean)
-  - Boolean operands are used -> may returns Booleans
+  - When Boolean operands are used, the result is a Boolean
 
 - `&&`(AND) returns the first falsy value or the last value
 - `||`(OR) returns the first truthy value or the last value
 - `!`(NOT) converts a value to Boolean and negates it
+
+### Short-circuit evaluation
+
+- JavaScript stops evaluating as soon as the result is determined
+  - **`&&` (AND):** Stops at the first **Falsy** value
+    - `false && doSomething()` → `doSomething` is **never** executed
+  - **`||` (OR):** Stops at the first **Truthy** value
+    - `true || doSomething()` → `doSomething` is **never** executed
+
+> 💡 **Why it matters:** This is commonly used for "Guard Clauses" (to prevent errors) and "Default Values".
+
+### Common use cases
+
+- Guard pattern
+  - `value && doSomething()` guard pattern
+  - `if (value)` to check existence
+- Toggling a boolean value
+- Check the number of elements in an array
+  - `if (!items.length) doSomething()`
+  - `const hasItems = !!cartItems; // 0 (falsy) `
+- Setting default value
+  - `value || defaultValue` default for falsy values
+  - `value ?? defaultValue` default only for null/undefined
+
+### ⚠ Common pitfalls
+
+- console.log() returns undefined
+- NaN is not equal to itself
+  - 🆖`Number(value) === NaN`
+  - 🆗`Number.isNaN(value)`
+- `0`, `""` are falsy (**be careful with **`||`)
+- `[]` and `{}` are truthy
+- Use `??` when 0 or "" are valid values
 
 ### What is an Operand?
 

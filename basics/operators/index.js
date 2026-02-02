@@ -185,7 +185,7 @@ console.log(isUnicodeLess);
 console.log(isUnicodeGreater);
 console.log(isNotUnicodeGreater);
 
-// Compareing different types---
+// Compareing different types
 console.log(5 > "3"); // true "3" is converted to number 3
 console.log("5" > 10); // false "5" is converted to number 5
 console.log("abc" < "abd"); // true
@@ -197,7 +197,7 @@ console.log(null == undefined); // true only with loose equality
 console.log(null === undefined); // false
 
 // ------------------------------------------------------------
-// 4-1) Logical Operators-
+// 4-1) Logical Operators
 // ------------------------------------------------------------
 
 // && AND
@@ -281,7 +281,8 @@ if (!items.length) {
 
 // D) Setting default value
 function greet(firstName) {
-  const name = firstName || "Guest"; // If firstName is falsy, it uses Guest
+  // If firstName is falsy, it uses "Guest"
+  const name = firstName || "Guest";
   console.log(`Hello, ${name}!`);
 }
 
@@ -289,28 +290,23 @@ greet(); // Hello, Guest!
 greet("eGaruru"); // Hello, eGaruru!
 
 function setHitPoint(restPoint) {
-  const hp = restPoint ?? 100; // If restPoint is null or undefined -> 100
-  if (Number.isNaN(Number(hp))) return 100; // NaN -> 100
-  if (hp === "") return 100; // "" -> 100 (when want to except 0, use !hp)
-  return hp;
+  // If restPoint is null or undefined -> 100
+  const hp = restPoint ?? 100;
+
+  // NaN or "" -> 100
+  if (hp === "" || Number.isNaN(Number(hp))) return 100;
+
+  // convert "0" to 0
+  return Number(hp);
 }
 
-const robo1 = { hp: setHitPoint(null) }; // 100
-const robo2 = { hp: setHitPoint(undefined) }; // 100
-const robo3 = { hp: setHitPoint("0") }; // 0
-const robo4 = { hp: setHitPoint("") }; // 100
-const robo5 = { hp: setHitPoint("aaa") }; // 100
-const robo6 = { hp: setHitPoint(55) }; // 55
-const robo7 = { hp: setHitPoint(0) }; // 100
-console.log(
-  robo1.hp,
-  robo2.hp,
-  robo3.hp,
-  robo4.hp,
-  robo5.hp,
-  robo6.hp,
-  robo7.hp,
-);
+console.log(setHitPoint(null)); // 100
+console.log(setHitPoint(undefined)); // 100
+console.log(setHitPoint("0")); // 0
+console.log(setHitPoint("")); // 100
+console.log(setHitPoint("aaa")); // 100
+console.log(setHitPoint(55)); // 55
+console.log(setHitPoint(0)); // 0
 
 // E) Double NOT (!!) to force Boolean type
 console.log(!!0); // false
@@ -325,5 +321,48 @@ const hasName = !!currentUserName; // Convert string to true
 console.log("Has currentUserName:", hasName); // Has currentUserName: true
 
 // ------------------------------------------------------------
-// 5) Ternary Operators-
+// 5) Typeof Operator
+// ------------------------------------------------------------
+
+// typeof always returns a string
+console.log(typeof typeof 1); // Expected output: string
+
+// number
+console.log(typeof NaN === "number"); // true "Not-A-Number" is number
+
+// Number("text") results in NaN, and typeof NaN is "number"
+console.log(typeof Number("text") === "number");
+console.log(typeof Number("7") === "number"); // true
+
+// string
+typeof "" === "string";
+typeof "bla" === "string";
+typeof `template literal` === "string";
+console.log(typeof "1" === "string"); // true
+console.log(typeof String(1) === "string"); // true, String() converts all value to string
+
+// boolean
+console.log(typeof Boolean(1) === "boolean"); // true, Boolean() converts value true/false based on value
+console.log(typeof !!1 === "boolean"); // !!1 -> true -> typeof true
+
+// Expect output: object
+console.log(typeof {});
+console.log(typeof []);
+console.log(typeof null);
+
+// Expect output: function
+console.log(typeof function () {});
+console.log(typeof class Person {});
+console.log(typeof Number.isNaN);
+
+// new operator creates an object (or function object), not a primitive
+console.log(typeof new Date()); // object
+console.log(typeof new Function()); // function
+
+// typeof has higher precedence than arithmetic operators
+typeof 777 + " foo"; // "number foo" -> typeof is evaluted first, then + operator connects as string
+typeof (777 + " foo"); // "string" -> the data type of expressions is evaluted  with Parentheses
+
+// ------------------------------------------------------------
+// 6) Ternary Operators
 // ------------------------------------------------------------

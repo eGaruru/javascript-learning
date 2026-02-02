@@ -117,11 +117,81 @@ When comparing strings using `>` or `<`, JavaScript compares characters based on
 
 - console.log() returns undefined
 - NaN is not equal to itself
-  - 🆖`Number(value) === NaN`
-  - 🆗`Number.isNaN(value)`
+  - ⭕`Number.isNaN(value)`
+  - ❌`Number(value) === NaN`
 - `0`, `""` are falsy (**be careful with **`||`)
 - `[]` and `{}` are truthy
 - Use `??` when 0 or "" are valid values
+
+## Typeof operator
+
+- `typeof` operator returns a **string** indicating the data type of operand's value
+- The output of `typeof` is always a string
+
+### Typeof Detailed Examples
+
+| Value             | Code Example     | `typeof` Result | Notes                              |
+| :---------------- | :--------------- | :-------------- | :--------------------------------- |
+| Number            | `123`            | `"number"`      | Includes integers and floats       |
+| NaN               | `NaN`            | `"number"` ⚠    | Special numeric value              |
+| String            | `"text"`         | `"string"`      | Includes template literals         |
+| Boolean           | `true`           | `"boolean"`     |                                    |
+| Undefined         | `let x;`         | `"undefined"`   | Variable declared but not assigned |
+| Null              | `null`           | `"object"` ⚠    | Historical JavaScript bug          |
+| Object            | `{}`             | `"object"`      | Plain object                       |
+| Array             | `[]`             | `"object"` ⚠    | Use `Array.isArray()`              |
+| Function          | `function(){}`   | `"function"`    | Callable object                    |
+| Class             | `class A {}`     | `"function"` ⚠  | Classes are functions internally   |
+| Symbol            | `Symbol("id")`   | `"symbol"`      | Unique identifier                  |
+| BigInt            | `123n`           | `"bigint"`      | Large integers                     |
+| Date instance     | `new Date()`     | `"object"`      | `new` creates an object            |
+| Function instance | `new Function()` | `"function"` ⚠  | Functions are callable objects     |
+
+### Common `typeof` Return Values
+
+| `typeof` Result | Covers                    |
+| :-------------- | :------------------------ |
+| `"number"`      | Numbers, `NaN`            |
+| `"string"`      | Strings                   |
+| `"boolean"`     | `true`, `false`           |
+| `"undefined"`   | Uninitialized variables   |
+| `"object"`      | Objects, arrays, `null` ⚠ |
+| `"function"`    | Functions, classes        |
+| `"symbol"`      | Symbols                   |
+| `"bigint"`      | BigInt values             |
+
+### `new` and `typeof`
+
+- `new` creates an object(or a function object), not a primitive
+  - `typeof new Date()` → `"object"`
+  - `typeof new Function()` → `"function"`
+
+### ⚠ Common pitfalls
+
+- `typeof null` returns `"object"` (historical bug)
+- Arrays return `"object"`
+  - Use `Array.isArray(value)` to check arrays
+- `NaN` is of type `"number"`
+
+> 💡 `typeof` has higher precedence than arithmetic operators  
+> Use parentheses when checking the type of expressions:
+>
+> - `typeof value + "x"` ≠ `typeof (value + "x")`
+
+## Ternary Operator
+
+- `condition ? value1 : value2`
+- Ternary operators should not be nested because they reduce readability
+  - ⭕ `const message = isLoggedIn ? "Welcome!" : "Please Log in";`
+  - ❌ `const result = a ? b : c ? d : e;`
+
+> 💡 **Tip:** Operators can be classified by the number of operands they take:
+>
+> - **Unary operator:** Takes 1 operand (e.g., `typeof`,`x++`, `!true`)
+> - **Binary operator:** Takes 2 operands (e.g., `5 + 8`, `x > y`)
+> - **Ternary operator:** Takes 3 operands (e.g., `condition ? a : b`)
+
+## Appendix
 
 ### What is an Operand?
 
@@ -129,16 +199,6 @@ When comparing strings using `>` or `<`, JavaScript compares characters based on
 - **Example:** `const x = 5 + 8;`
   - `5` and `8` are the **operands**.
   - `+` and `=` are the **operators**.
-
-## Ternary Operator
-
-- `condition ? value1 : value2`
-
-> 💡 **Tip:** Operators can be classified by the number of operands they take:
->
-> - **Unary operator:** Takes 1 operand (e.g., `x++`, `!true`)
-> - **Binary operator:** Takes 2 operands (e.g., `5 + 8`, `x > y`)
-> - **Ternary operator:** Takes 3 operands (e.g., `condition ? a : b`)
 
 ## Files
 

@@ -1,4 +1,4 @@
-# 2026-01-14
+# Variables
 
 ## What I studied
 

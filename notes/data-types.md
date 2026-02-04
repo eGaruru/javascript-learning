@@ -1,4 +1,4 @@
-# 2026-01-16
+# Data Types
 
 ## What I studied
 

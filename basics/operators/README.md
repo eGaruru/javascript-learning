@@ -50,9 +50,9 @@
 
 - `==` vs `===`, `!=` vs `!==`
   - `==`, `!=` only compare values ​​and do not take into account differences in data types
-  - `===`, `!==` compare values and data types, judge strictly
+  - `===`, `!==` compare values and data types, compare strictly
 
-> 💡 Best practice: Always use `===`, `!==` by default to avoid to misjudgment
+> 💡 Best practice: Always use `===`, `!==` by default to avoid misjudgment
 
 - Comparing different types
   - When using `==`, JavaScript performs type coercion (automatic type conversion)
@@ -125,7 +125,7 @@ When comparing strings using `>` or `<`, JavaScript compares characters based on
 
 ## Typeof operator
 
-- `typeof` operator returns a **string** indicating the data type of operand's value
+- `typeof` operator returns a **string** indicating the data type of the operand's value
 - The output of `typeof` is always a string
 
 ### Typeof Detailed Examples
@@ -178,10 +178,14 @@ When comparing strings using `>` or `<`, JavaScript compares characters based on
 >
 > - `typeof value + "x"` ≠ `typeof (value + "x")`
 
-## Ternary Operator
+## Conditional (ternary) operator
 
-- `condition ? value1 : value2`
-- Ternary operators should not be nested because they reduce readability
+- Conditional (ternary) operator is the only JavaScript operator that takes **three operands**
+- `variable = condition ? exprIfTrue : exprIfFalse`
+- This operator **returns a value**
+- It is frequently used as an alternative to `if...else`
+- The conditional operator is **right-associative** and can be chained
+  - However, chaining (nesting) is **not recommended** because it reduces readability
   - ⭕ `const message = isLoggedIn ? "Welcome!" : "Please Log in";`
   - ❌ `const result = a ? b : c ? d : e;`
 

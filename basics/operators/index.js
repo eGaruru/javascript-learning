@@ -364,5 +364,65 @@ typeof 777 + " foo"; // "number foo" -> typeof is evaluted first, then + operato
 typeof (777 + " foo"); // "string" -> the data type of expressions is evaluted  with Parentheses
 
 // ------------------------------------------------------------
-// 6) Ternary Operators
+// 6) Conditional (ternary) operator
 // ------------------------------------------------------------
+
+// basics
+const isConditionTrue = true;
+const result = isConditionTrue ? "exprIfTrue" : "exprIfFalse";
+console.log("result ->", result); // result -> exprIfTrue
+
+const age = 17;
+const canDriving =
+  18 <= age ? "You can drive🚗" : "You must be waiting to drive...";
+console.log("Can I drive? ->", canDriving); // Can I drive? -> You must be waiting to drive...
+
+// Handling falsy values (similar to logical operators)
+function welcomMessage(loginUser) {
+  const userName = loginUser ? loginUser.name : "Anonymous";
+  return `Welcome, ${userName}! How is it going?`;
+}
+
+console.log("messageText:", welcomMessage({ name: "Garuru" })); // Garuru
+console.log("messageText:", welcomMessage(null)); // Anonymous
+console.log("messageText:", welcomMessage(undefined)); // Anonymous
+console.log("messageText:", welcomMessage(0)); // Anonymous
+console.log("messageText:", welcomMessage("")); // Anonymous
+
+// Replace if/else
+let isIfExprUsed = true;
+if (isIfExprUsed) {
+  console.log("This is if else statement");
+} else {
+  console.log("This is not if else statement");
+}
+
+isIfExprUsed = false;
+console.log(
+  isIfExprUsed ? "This is if else statement" : "This is not if else statement",
+);
+
+// ⚠ Avoid nesting(but can be chained)
+// Not Recommended --- (↓This example code is quoted from MDN)
+// function example() {
+//   return condition1
+//     ? value1
+//     : condition2
+//       ? value2
+//       : condition3
+//         ? value3
+//         : value4;
+// }
+
+// Good --- (↓This example code is quoted from MDN)
+function example() {
+  if (condition1) {
+    return value1;
+  } else if (condition2) {
+    return value2;
+  } else if (condition3) {
+    return value3;
+  } else {
+    return value4;
+  }
+}

@@ -8,39 +8,54 @@
 
 ### Operator precedence
 
-- JavaScript has a clearly defined `operator precedence` [MDN-Table](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Operator_precedence#%E4%B8%80%E8%A6%A7%E8%A1%A8)
-- In general, operators are evaluated in the following order: Arithmetic > Comparison > Logical > Assignment (This is a simplified rule)
+- JavaScript has a clearly defined [Operator Precedence Table (MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence#table).
+- In general, operators are evaluated in the following order (Simplified):
+  1.  **Grouping**: `()`
+  2.  **Unary**: `++x`, `!`, `typeof`, `delete`
+  3.  **Exponentiation**: `**` (Right-to-left)
+  4.  **Multiplicative**: `*`, `/`, `%`
+  5.  **Additive**: `+`, `-`
+  6.  **Comparison**: `<`, `>`, `===`, `!==`
+  7.  **Logical**: `&&`, `||`, `??`
+  8.  **Conditional (Ternary)**: `? :`
+  9.  **Assignment**: `=`, `+=`, etc.
 
 - Parentheses `()` have the highest precedence
 
-> 💡 Use parentheses actively to avoid bugs and improve readability
+> 💡 Use parentheses `()` actively to prevent bugs and improve readability
 
 ### Associativity
 
-- Operators have an evaluation order
-- Arithmetic operators(`+ - * / %`) are evaluated from left to right
-  - `**` is evaluated from right to left
-- Comparison operators are evaluated from left to right
-- Logical operators are evaluated from left to right
-- Assignment operators are evaluated from right to left
+- Operators have associativity (grouping direction)
+- Associativity determines how operators of the same precedence are grouped
+- It defines the **implicit parenthesization`()`**, not the execution order
+- It does NOT affect the order in which operands are evaluated
 
-### Precedence vs Associativity
+- Arithmetic operators(`+ - * / %`) are left-associative
+  - `**` is right-associative
+  - e.g. `4 ** 3 ** 2` === `4 ** (3 ** 2)`
+- Comparison operators are left-associative
+- Logical operators are left-associative
+- Assignment operators are right-associative
 
-- Precedence determines **which operator is evaluated first**
-- Associativity determines **the order of evaluation when operators have the same precedence**
+### The order of evaluation of operators vs Precedence vs Associativity
+
+- **Operand Evaluation Order**: Always **Left-to-Right** (No exceptions)
+- **Precedence**: Determines **which operator is evaluated first**
+- **Associativity**: Determines the grouping order when operators have the **same precedence**
 
 ### Short-circuit evaluation
 
-- Logical operators (AND`&&`, OR`||`) use short-circuit evaluation
-- Expressions may stop evaluating before reaching the end
-  - `false && someFunction()` → `someFunction()` is NOT executed
+- Logical operators (`&&`, `||`, `??`) utilize short-circuit evaluation
+- Evaluation stops as soon as the result is determined
+  - `false && someFunction()` → `someFunction()` is **NOT** executed
+  - `true || someFunction()` → `someFunction()` is **NOT** executed
 
-  - `true || someFunction()` → `someFunction()` is NOT executed
+### ⚠ Common pitfalls
 
-### Common pitfalls
-
-- `a && b || c` can be confusing without parentheses
-- **Always use parentheses when mixing logical operators**
+- Mixing logical operators without parentheses can be confusing
+  - `a && b || c`
+- **Best Practice:** Always use parentheses for clarity
   - `(a && b) || c`
   - `a && (b || c)`
 

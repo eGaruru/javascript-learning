@@ -6,7 +6,7 @@
 - Operators also have associativity (left-to-right or right-to-left)
 - It is important to have a rough understanding of which operator is evaluated first
 
-### Operator precedence
+## Operator precedence
 
 - JavaScript has a clearly defined [Operator Precedence Table (MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence#table).
 - In general, operators are evaluated in the following order (Simplified):
@@ -24,7 +24,7 @@
 
 > 💡 Use parentheses `()` actively to prevent bugs and improve readability
 
-### Associativity
+## Associativity
 
 - Operators have associativity (grouping direction)
 - Associativity determines how operators of the same precedence are grouped
@@ -36,9 +36,10 @@
   - e.g. `4 ** 3 ** 2` === `4 ** (3 ** 2)`
 - Comparison operators are left-associative
 - Logical operators are left-associative
+- Conditional operator is right-associative
 - Assignment operators are right-associative
 
-### The order of evaluation of operators vs Precedence vs Associativity
+### Operand Evaluation Order vs Precedence vs Associativity
 
 - **Operand Evaluation Order**: Always **Left-to-Right** (No exceptions)
 - **Precedence**: Determines **which operator is evaluated first**
@@ -46,18 +47,39 @@
 
 ### Short-circuit evaluation
 
-- Logical operators (`&&`, `||`, `??`) utilize short-circuit evaluation
+- Logical operators (`&&`, `||`, `??`, `?.`) utilize short-circuit evaluation
+- first left operand is always evaluated
 - Evaluation stops as soon as the result is determined
   - `false && someFunction()` → `someFunction()` is **NOT** executed
   - `true || someFunction()` → `someFunction()` is **NOT** executed
+  - `console.log(C() || (B() && A()));` C() returns true, then || stopps expression
+
+> 💡 Most operators evaluate all operands
+> Logical operators (`&&`, `||`, `??`, `?.`) may stop evaluation early due to short-circuit behavior
 
 ### ⚠ Common pitfalls
 
 - Mixing logical operators without parentheses can be confusing
-  - `a && b || c`
+  - `a && b || c`(hard to read)
 - **Best Practice:** Always use parentheses for clarity
   - `(a && b) || c`
   - `a && (b || c)`
+
+## Rule of Thumb
+
+- Always use parentheses when mixing logical operators
+- Never rely on implicit grouping for readability
+- Do not mix `??` with `&&` or `||` without parentheses
+- If expression looks complex → rewrite using `if` statements
+
+## Appendix
+
+### Expression Evaluation Flow
+
+1. All operands are evaluated from left to right.
+2. Operator precedence determines how expressions are grouped
+3. Associativity determines grouping when operators share the same precedence
+4. Operators are applied based on that grouping
 
 ## Files
 

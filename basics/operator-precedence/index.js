@@ -1,7 +1,7 @@
-// JavaScript Operator Procedence
+// JavaScript Operator Precedence
 
 // ------------------------------------------------------------
-// 1) Procedence
+// 1) Precedence
 // ------------------------------------------------------------
 // basic
 console.log(1 + 2 * 3); // 2 * 3 -> 6 + 1 -> 7
@@ -12,6 +12,23 @@ console.log(typeof 2 + 3); // number3 typeof 2 -> number + 3 -> string coertion
 console.log(typeof (2 + 3)); // number can be checked type of expression
 
 // Evaluation order vs precedence
+function left() {
+  console.log("left operand is evaluated");
+  return 10;
+}
+
+function right() {
+  console.log("right operand is evaluated");
+  return 5;
+}
+
+console.log(left() + right() * 2);
+// Logs:
+// left operand evaluated
+// right operand evaluated
+// 20
+// first, all operands are called from left to right: operand evaluation order
+// then calculate right:5 * 2 -> left:10 + 10 -> 20
 
 // ------------------------------------------------------------
 // 2) Associativity
@@ -25,11 +42,11 @@ function echo(name, num) {
 
 console.log(echo("left", 4) ** (echo("middle", 3) ** echo("right", 2)));
 // what is happend?
-// first, all operands are called from left to right : order of operand evaluation
+// first, all operands are called from left to right: operand evaluation order
 // then, calculate 3 ** 2 -> 4 ** 9 -> 262144 // associativity
 
 console.log(echo("left", 4) ** echo("middle", 3) / echo("right", 2));
-// first, all operands are called from left to right : order of operand evaluation
+// first, all operands are called from left to right: operand evaluation order
 // then, calculate 4 ** 3 -> 64 / 2 -> 32 // associativity
 
 // ------------------------------------------------------------
@@ -54,8 +71,8 @@ console.log(C() || (B() && A()));
 // called C
 // true
 // what is happend?
-// first C() is evalueted -> true
-// || returns first truhy value, NOT evaluted B() && A()
+// first C() is evaluated -> true
+// || returns first truthy value, NOT evaluated B() && A()
 
 console.log((A() && B()) || C());
 // Logs:
@@ -63,11 +80,11 @@ console.log((A() && B()) || C());
 // called C
 // true
 // what is happend?
-// A() is evalueted -> false, && returns first falsy value or last truthy value
-// NOT evalueted B() but false || C() -> C() is evalueted
+// A() is evaluated -> false, && returns first falsy value or last truthy value
+// NOT evaluated B() but false || C() -> C() is evaluated
 
 // simple practice
-console.log(true || (false && false)); // true
+console.log(true || (false && true)); // true, but right side(false && true) is NOT evaluated
 console.log((false && true) || true); // true, but && *true* is NOT evaluated
 console.log(0 || (1 && 2)); // 0 || 2 -> 2
 
@@ -94,6 +111,10 @@ console.log(a?.b.c); // {}
 console.log((null || undefined) ?? "A"); // A
 console.log(null || (undefined ?? "A")); // A
 
+// && and || return not only boolean
+console.log(("A" && "B") || "C"); // "B"
+console.log(("" && "B") || "C"); // "C"
+
 // ------------------------------------------------------------
 // 4) Ternary precedence with logical operators
 // ------------------------------------------------------------
@@ -102,8 +123,18 @@ console.log(true ? false : true ? "A" : "B"); // false
 // Grouping from associativity -> true ? false : (true ? "A" : "B")
 // true returns false
 
+let x = true;
+let y = false;
+let z = false;
+
+// ❌ Hard to read
+// const result = x && y || z;
+
+// ✅ Clear
+const result = (x && y) || z;
+
 // ❌ Avoid nesting
-// const message = isLoggedIn ? (isAdmin ? "Admin" : "User") : "Guest";
+// const message = isLoggedIn ? isAdmin ? "Admin" : "User" : "Guest";
 
 // ✅ Clearer
 let message;

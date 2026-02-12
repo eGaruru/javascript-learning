@@ -69,8 +69,13 @@
 
 - Always use parentheses when mixing logical operators
 - Never rely on implicit grouping for readability
-- Do not mix `??` with `&&` or `||` without parentheses
-- If expression looks complex → rewrite using `if` statements
+  - `(a && b) || c`
+  - `a && (b || c)`
+- Do not mix `??` with `&&` or `||` without parentheses, use`()`!
+  - `(a || b) ?? c`
+  - `a || (b ?? c)`
+
+- If expression looks complex → rewrite using `if/else` statements
 
 ## Appendix
 

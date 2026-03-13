@@ -158,7 +158,7 @@ switch (alphabet) {
     console.log("cat");
     break; // Execution Stops here and exits from switch statement
   case "d":
-    console.log(2);
+    console.log("dog");
     break;
   default:
     console.log("default");

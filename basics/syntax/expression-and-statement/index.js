@@ -78,7 +78,7 @@ const greet3 = (firstName) => `Hi, ${firstName}! How is it going?`;
 
 // Block statement
 {
-  let statement = block;
+  let statement = "block";
 }
 
 // ------------------------------------------------------------

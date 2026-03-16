@@ -4,18 +4,23 @@
 
 - What is a function?
 - In JavaScript, there are 3 function types
+- The concept of **First-Class Functions** (Functions are values!)
 
 ## What is a function?
 
-A function is a reusable block of code
-
-> 💡 In JavaScript, functions are also values. They can be stored in variables and passed to other functions.
+- A function is a reusable block of code
+- Functions are also values
+- They can be stored in variables, passed as arguments to other functions, and returned from functions
 
 ### Function types
 
-1. Function Declaration
+#### 1. Function Declaration
 
-Features:
+**Basic syntax:**
+
+- `function fn(){}`
+
+**Features:**
 
 - It can be called even on a line before it is defined (hoisting)
 - It is loaded before the code is executed
@@ -29,9 +34,13 @@ function calcAverage(a, b, c) {
 }
 ```
 
-2. Function Expression
+#### 2. Function Expression
 
-Features:
+**Basic syntax:**
+
+- `const fn = function(){}`
+
+**Features:**
 
 - A function is assigned to a variable
 - **It can be called after it is declared**
@@ -47,9 +56,13 @@ const calcAverage = function (a, b, c) {
 const avg = calcAverage(10, 9, 8);
 ```
 
-3. Arrow Function
+#### 3. Arrow Function
 
-Features:
+**Basic syntax:**
+
+- `const fn = ()=>{}`
+
+**Features:**
 
 - It is also a function expression(ES6/ES2015~)
 - If the function body has only one expression, the `return` keyword can be omitted
@@ -81,12 +94,48 @@ const getWinner = (scorePlayer1, scorePlayer2) => {
 ### Function Anatomy
 
 - **Function Body**: `{}` is called the function body
-- **Parameter**: the place holder of function, like local variables
+- **Parameter**: a placeholder for values passed into a function, like local variables
 - **Argument**: the actual data(values) that is put in the place holder when calling a function
 - **Return**: when return is executed, the function outputs a value and immediately stops execution
 - **Calling / Running / Invoking**: Execute it by enclosing it in parentheses, like `functionName();`
 
-> ⚠ Without (), the function is not executed: Instead, it refers to the function itself.
+> ⚠ Without (), the function is not executed: Instead, it refers to the function itself
+
+### First-Class Functions
+
+In JavaScript, functions are treated as values
+This concept is called **First-Class Functions**
+
+- assigned to variables
+- passed as arguments
+- returned from other functions
+
+```js
+// returned from other functions
+const sayGreeting = function () {
+  return (greetingMessage, timeSlot, firstName) =>
+    console.log(`${greetingMessage(timeSlot)} ${firstName}`);
+};
+
+const greeting = function (timeSlot) {
+  const timeSlots = {
+    morning: "Good morning!",
+    afternoon: "Good afternoon!",
+    evening: "Good evening!",
+  };
+
+  const greet = timeSlots[timeSlot] ?? "Hello!";
+  return greet;
+};
+
+// assigned to variables
+const greet = sayGreeting();
+
+// passed as arguments
+greet(greeting, "evening", "Garuru"); // Output: Good evening! Garuru
+```
+
+> 💡 **First-Class Citizens**: It can be treated the same way as other basic data types (such as primitive data types)
 
 ### ⚠ Common pitfalls
 
@@ -118,7 +167,7 @@ const loggingException = function (exception) {
 console.log(logger("delete"));
 // Output:
 // Action[delete] started logging-------- (from inside the function)
-// undefined (when function returns any value, return undefined automatically)
+// undefined (If a function does not explicitly return a value, it returns `undefined`)
 
 // Printing the function reference
 console.log(logger);

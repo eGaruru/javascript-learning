@@ -117,7 +117,7 @@ const sayGreeting = function () {
     console.log(`${greetingMessage(timeSlot)} ${firstName}`);
 };
 
-const greeting = function (timeSlot) {
+const createGreeting = function (timeSlot) {
   const timeSlots = {
     morning: "Good morning!",
     afternoon: "Good afternoon!",
@@ -132,7 +132,7 @@ const greeting = function (timeSlot) {
 const greet = sayGreeting();
 
 // passed as arguments
-greet(greeting, "evening", "Garuru"); // Output: Good evening! Garuru
+greet(createGreeting, "evening", "Garuru"); // Output: Good evening! Garuru
 ```
 
 > 💡 **First-Class Citizens**: It can be treated the same way as other basic data types (such as primitive data types)
@@ -160,7 +160,7 @@ const loggingException = function (exception) {
   return exceptionType; // function exits immediately and outputs a value
 
   // ❌ Unreachable code: This will NEVER be executed
-  console.log(`Exception type[${exceptionType}] is happened----`);
+  console.log(`Exception type[${exceptionType}] occurred----`);
 };
 
 // 3. Printing a function that has no return value
@@ -172,6 +172,53 @@ console.log(logger("delete"));
 // Printing the function reference
 console.log(logger);
 // Output: [Function: logger]
+```
+
+### 🔎 Why treat functions as values? (Use Cases)
+
+Understanding **why** we pass and return functions is key to mastering JavaScript
+
+**1. Passed as Arguments (Callbacks)**
+
+- **Analogy:** Like attaching a specific "blade" to a blender
+- **Why:**
+  - You let another system (like a browser or an Array method) handle the **"When"** or **"How many times"** (e.g., when a button is clicked, or looping through 100 items), and you just pass the **"What to do"** (the function)
+  - You pass the function, and it will be executed later by another system
+- **Example:**
+
+```js
+const sayHello = () => console.log("Hello!");
+
+button.addEventListener("click", sayHello);
+```
+
+**2. Returned from Functions (Factory / Closure)**
+
+- **Analogy:** Like a "Machine Factory" that builds customized machines
+- **Why:** To lock in certain configurations or settings first, and generate specialized functions that can be reused easily without repeating parameters
+- **Example:**
+
+```js
+const createTaxCalculator = (rate) => (bill) => rate * bill;
+
+// similar functions will be generated
+const taxCalcForNY = createTaxCalculator(0.0885);
+const taxCalcFL = createTaxCalculator(0.07);
+```
+
+**3. Stored in Objects/Variables (Toolbox)**
+
+- **Analogy:** Like a "Toolbox" organizing your tools
+- **Why:** To group related functions together so your code is organized, clean, and easy to access
+- **Example:**
+
+```js
+const mathOps = {
+  add: (a, b) => a + b,
+  sub: (a, b) => a - b,
+};
+
+mathOps.add(2, 3);
 ```
 
 ## Files

@@ -165,3 +165,45 @@ const mathOps = { add: addNum, sub: subNum };
 
 console.log(mathOps.add(10, 12)); // 22
 console.log(mathOps.sub(10, 12)); // -2
+
+// Extra Excerceise
+// 🏋️‍♂️ Challenge 1: The Custom Array Processor (Callback)
+
+// Mixer/Blender
+const processArray = function (array, fn) {
+  // The same behavier with array.map(fn);
+  const resArray = [];
+  array.forEach((item) => resArray.push(fn(item)));
+  return resArray;
+};
+
+// Blade
+const addTen = (num) => num + 10;
+const makeString = (num) => `Number: ${num}`;
+
+// Ingredients
+const numbers = [1, 2, 3];
+
+console.log(processArray(numbers, addTen)); // [11, 12, 13]
+console.log(processArray(numbers, makeString)); // ['Number: 1', 'Number: 2', 'Number: 3']
+
+// 🏋️‍♂️ Challenge 2: The Multiplier Factory (Returned from Functions)
+// Base of machine
+const createMultiplier = (multiplier) => (num) => multiplier * num;
+
+// Different types of machine
+const triple = createMultiplier(3);
+const quadruple = createMultiplier(4);
+
+console.log(triple(5)); // 15
+console.log(quadruple(5)); // 20
+
+// 🏋️‍♂️ Challenge 3: String Formatter Toolbox (Stored in Objects)
+// Toolbox of functions for text
+const textTools = {
+  uppercase: (str) => str.toUpperCase(),
+  exclaim: (str) => str + "!!!",
+};
+
+console.log(textTools.uppercase("hello")); // HELLO
+console.log(textTools.exclaim("wow")); // wow!!!

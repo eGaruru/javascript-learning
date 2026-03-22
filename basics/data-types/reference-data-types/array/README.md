@@ -14,7 +14,7 @@
 
 An array is a type of object in JavaScript (reference type):
 
-- An array is such as a box that different data type values can be stored
+- An array is like a box where different data types can be stored
 - Use bracket notation to access each element of an array
   - Bracket notation requires an expression (usually a number)
   - The expression is evaluated and internally converted to a string key
@@ -50,7 +50,7 @@ const SurpriseBox = ["cat", 1980, , true, null, undefined];
 const fruitBox = [];
 
 /* Add */
-// push: element(at least)
+// push: add element (at the end)
 fruitBox.push("Apple"); // or fruitBox[0] = "Apple" -> returns the length: 1
 fruitBox.push("Orange"); // ["Apple", "Orange"]
 
@@ -58,7 +58,7 @@ fruitBox.push("Orange"); // ["Apple", "Orange"]
 fruitBox.unshift("Peach"); // ["Peach", "Apple", "Orange"] -> returns the length: 3
 
 /* Remove */
-// pop: element(at least)
+// pop: remove element (from the end)
 fruitBox.pop(); // ["Peach", "Apple"] -> returns the removed value "Orange"
 
 // shift: element(at first)

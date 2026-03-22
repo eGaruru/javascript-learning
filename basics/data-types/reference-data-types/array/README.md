@@ -218,6 +218,30 @@ const sum = numbers.reduce((acc, cur) => acc + cur, initialValue);
 console.log(sum); // 221
 ```
 
+### 💡 Which Method Should I Use? (Decision Guide)
+
+When working with an array, ask yourself **"What do I want as a result?"**
+
+**1. Do I want a NEW ARRAY?**
+
+- ➡ YES, I want to modify/transform every element. 👉 Use **`map()`**
+- ➡ YES, I want to keep only the elements that match a condition. 👉 Use **`filter()`**
+- ➡ YES, I want to copy a portion of the array. 👉 Use **`slice()`**
+
+**2. Do I want a SINGLE VALUE (not an array)?**
+
+- ➡ YES, I want to calculate a sum, string, or object from the array. 👉 Use **`reduce()`**
+
+**3. Do I want to FIND something?**
+
+- ➡ YES, I just want to know if it exists (true/false). 👉 Use **`includes()`** (or `some()`)
+- ➡ YES, I want the actual element itself. 👉 Use **`find()`**
+- ➡ YES, I want the index number of the element. 👉 Use **`findIndex()`** (or `indexOf()`)
+
+**4. I don't want a new array or value, I just want to DO SOMETHING (Side effect).**
+
+- ➡ 👉 Use **`forEach()`** (e.g., logging to console, manipulating the DOM)
+
 ### Modern Syntax
 
 - **Destructuring assignment**: Split the elements of an array and assign them to multiple variables

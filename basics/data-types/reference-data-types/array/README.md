@@ -248,7 +248,84 @@ console.log(newItems); // [ 'apple', 'banana', 'orange', 'grapes' ]
 
 ### ⚠ Mutation vs Non-Mutation
 
+Some array methods mutate the original array:
+
+- Typical **mutating** methods:
+  `push`, `pop`, `shift`, `unshift`, `splice`, `fill`, `reverse`
+
+- Typical **Non-mutating** methods (Copying methods):
+  `slice`, `concat`, `map`, `filter`
+
+Some mutating methods have alternative approaches (Abstract examples):
+
+| Mutation       | Non-Mutation                             |
+| :------------- | :--------------------------------------- |
+| `pop()`        | `slice(0, -1)`                           |
+| `push(v1, v2)` | `concat([v1, v2])` or `[...arr, v1, v2]` |
+| `reverse()`    | `toReversed()` or `[...arr].reverse()`   |
+| `sort()`       | `toSorted()`                             |
+| `splice()`     | `toSpliced()`                            |
+
+> 💡 There is a comparison table of mutating and Non-mutating methods-> [MDN: Copying Methods and Mutating Methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#copying_methods_and_mutating_methods)
+
+An easy way to change a mutating method into a non-mutating alternative:
+
+- Use `spread syntax`
+- Use `slice()`
+
+```js
+const arr = [0, 1, 2, 3, 4, 5];
+
+// spread syntax
+const arrFill = [...arr].fill(5, 3, 5);
+console.log(arr, arrFill); // [0, 1, 2, 3, 4, 5] [0, 1, 2, 5, 5, 5]
+
+// slice
+const arrReverse = arr.slice().reverse();
+console.log(arr, arrReverse); // [0, 1, 2, 3, 4, 5] [5, 4, 3, 2, 1, 0]
+```
+
 ### ⚠ Shallow Copy
+
+**Non-mutating methods** (e.g, `map`, `filter`, `slice`...) and **Spread syntax** create shallow copies
+
+This means nested objects are still shared: an easy way to deep copy is `JSON.stringify`(⚠ but cannot always be used)
+
+```js
+const shoppingList = [
+  { fruit: { list: ["apple", "banana", "orange"] } },
+  { vegetables: { list: ["carrot", "tomato", "cucumber"] } },
+];
+
+const shoppingListShallow = [...shoppingList];
+
+console.log(
+  shoppingList[0]["fruit"]["list"][0],
+  shoppingListShallow[0]["fruit"]["list"][0],
+);
+// Output: apple apple
+
+shoppingList[0]["fruit"]["list"][0] = "peach";
+
+console.log(
+  shoppingList[0]["fruit"]["list"][0],
+  shoppingListShallow[0]["fruit"]["list"][0],
+);
+// ⚠ Output: peach peach🙀 Be careful when working with nested data!
+
+const shoppingListDeep = JSON.parse(JSON.stringify(shoppingList));
+
+shoppingList[0]["fruit"]["list"][0] = "pineapple";
+
+console.log(
+  shoppingList[0]["fruit"]["list"][0],
+  shoppingListShallow[0]["fruit"]["list"][0],
+  shoppingListDeep[0]["fruit"]["list"][0], // deep copied
+);
+// Output: pineapple pineapple peach
+```
+
+> 💡 structuredClone() can be used for deep copy in modern JavaScript ※Planning to learn
 
 ## Files
 

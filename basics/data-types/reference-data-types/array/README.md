@@ -36,7 +36,7 @@ console.log(animals.length); // 6
 // const animalFirst1 = animals.0;
 
 // An array can store different types of values
-const SurpriseBox = ["cat", 1980, , true, null, undefined];
+const surpriseBox = ["cat", 1980, , true, null, undefined];
 ```
 
 ### Basic Manipulation

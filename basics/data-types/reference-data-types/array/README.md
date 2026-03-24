@@ -349,7 +349,130 @@ console.log(
 // Output: pineapple pineapple peach
 ```
 
-> 💡 structuredClone() can be used for deep copy in modern JavaScript ※Planning to learn
+> 💡 structuredClone() can be used for deep copy in modern JavaScript
+
+## ⚠ Common pitfalls
+
+### 🚫 Avoid Mutation in Functional Methods (**IMPORTANT**)
+
+When using methods like `map`, `filter`, or `reduce`, you should NOT mutate the original data inside the callback function
+
+❌ Bad (mutation inside filter/map):
+
+```js
+const result = users.filter((user) => {
+  user.age = calcAge(user.birthYear); // ❌ mutation
+  return user.age >= 18;
+});
+```
+
+✅ Good (immutable approach):
+
+```js
+// object from array is expanded with spread syntax
+const result = users
+  .map((user) => ({ ...user, age: calcAge(user.birthYear) }))
+  .filter((user) => user.age >= 18);
+```
+
+> 💡 Always return a **NEW object** instead of modifying the original
+
+### 🚫 Avoid JSON Deep Copy in Real Applications
+
+A common way to create a deep copy is `JSON.parse(JSON.stringify(obj))`, but it is NOT recommended in real applications
+
+**What is the problem?**:
+
+- Some data types are not properly handled during serialization:
+  - Function → removed
+  - undefined → removed
+  - Symbol → removed
+  - Date → converted to string
+
+  👉 This can lead to unexpected bugs in real applications
+
+**How can we create a deep copy?**
+
+1. **RECOMMENDED**: `structuredClone()` is the modern and recommended way to create deep copies
+
+   (⚠ Note: structuredClone() also has limitations [MDN: Supported types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types))
+
+2. **Alternative**: `spread syntax` creates shallow copy, but you can explicitly control which parts to copy and update
+
+```js
+// Shallow layers (spread syntax can be used)
+const users = [
+  {
+    userId: 1,
+    userName: "Anna",
+    email: "anna.smith@example.com",
+    birthYear: 1999,
+    country: "Germany",
+  },
+];
+
+// Wrap with parentheses to return an object (not a block)
+const usersCopy = users.map((user) => ({
+  ...user, // Expanded object with spread syntax
+}));
+// ↓ or
+// Use return
+const usersCopy = users.map((user) => {
+  return {
+    ...user,
+  };
+});
+
+usersCopy[0].email = "annaNew@example.com";
+console.log(users[0].email); // anna.smith@example.com
+console.log(usersCopy[0].email); // "annaNew@example.com"
+
+// Deep layers (spread syntax can be used but need attention)
+const products = [
+  {
+    id: 1,
+    name: "laptop",
+    company: { name: "companyName1", address: "companyAddress1" },
+  },
+  {
+    id: 2,
+    name: "camera",
+    company: { name: "companyName2", address: "companyAddress2" },
+  },
+];
+
+// I want to add new property in company object...
+// ❌ BAD
+const productsCopy = products.map((item) => ({
+  ...item,
+}));
+
+productsCopy[0].company.isProduced = true;
+
+console.log(products[0].company); // { name: 'companyName1', address: 'companyAddress1', isProduced: true }
+console.log(productsCopy[0].company); // { name: 'companyName1', address: 'companyAddress1', isProduced: true }
+
+// ✅ GOOD (structuredClone)
+const productsCopy = structuredClone(products);
+
+productsCopy[0].company.isProduced = true;
+
+console.log(products[0].company); // { name: 'companyName1', address: 'companyAddress1' }
+console.log(productsCopy[0].company); // { name: 'companyName1', address: 'companyAddress1', isProduced: true }
+
+// ✅ GOOD (spread syntax) Expand and copy the part you want to change
+const productsCopy = products.map((item) => ({
+  ...item,
+  company: {
+    ...item.company, // here
+  },
+}));
+
+productsCopy[0].company.isProduced = true;
+
+console.log(products[0].company); // { name: 'companyName1', address: 'companyAddress1' }
+console.log(productsCopy[0].company); // { name: 'companyName1', address: 'companyAddress1', isProduced: true }
+```
 
 ## Files
 

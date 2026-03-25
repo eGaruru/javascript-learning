@@ -288,3 +288,259 @@ console.log(checkIn("Steven", attendees));
 
 // TEST DATA 2
 console.log(checkIn("Bob", attendees));
+
+const productsExercise = [
+  {
+    id: 1,
+    name: "Laptop",
+    price: 1200,
+    category: "Electronics",
+    inStock: true,
+  },
+  {
+    id: 2,
+    name: "Coffee Maker",
+    price: 80,
+    category: "Home Appliances",
+    inStock: false,
+  },
+  {
+    id: 3,
+    name: "Wireless Headphones",
+    price: 150,
+    category: "Electronics",
+    inStock: true,
+  },
+  {
+    id: 4,
+    name: "Running Shoes",
+    price: 120,
+    category: "Apparel",
+    inStock: true,
+  },
+  {
+    id: 5,
+    name: "Desk Lamp",
+    price: 30,
+    category: "Home Appliances",
+    inStock: true,
+  },
+];
+
+/*
+Challenge 1: Extracting specific elements
+Create a "new array" containing only items that are in stock (inStock: true).
+*/
+
+const availableProducts = productsExercise.filter((product) => product.inStock);
+console.log(availableProducts);
+
+/*
+Challenge 2: Transforming data
+Create a new array containing only the names of all products.
+Expect value: ["Laptop", "Coffee Maker", "Wireless Headphones", "Running Shoes", "Desk Lamp"]
+*/
+const productNames = productsExercise.map((product) => product.name);
+console.log(productNames);
+
+/*
+Challenge 3: Finding a specific element
+Find the product object with ID `3`.
+*/
+const targetProduct = productsExercise.find((product) => product.id === 3);
+console.log(targetProduct);
+
+/*
+Challenge 4: Accumulating a single value
+Calculate the "total price (sum of prices)" for all items.
+Expect value: 1580
+*/
+const initialVal = 0;
+const totalPrice = productsExercise
+  .map((product) => product.price)
+  .reduce((acc, cur) => acc + cur, initialVal);
+
+// another aproach
+// const totalPrice = products.reduce((acc, cur) => acc + cur.price, initialVal);
+
+console.log(totalPrice);
+
+/*
+Challenge 5: Method Chaining
+Create an array containing only the "names" of products in the "Electronics" category.
+*/
+const electronicsNames = productsExercise
+  .filter((product) => product.category === "Electronics")
+  .map((product) => product.name);
+console.log(electronicsNames);
+
+// ==========================================
+// Immutable Practice 🏋️
+// ==========================================
+const changePrice = (price, percentage) => price * (percentage / 100 + 1);
+
+// 1. A 10% discount will be applied to the price.
+const discountProducts = productsExercise.map((product) => ({
+  ...product,
+  price: changePrice(product.price, -10),
+}));
+
+console.log(discountProducts);
+
+// 2. Set `id:2` to `done:true`.
+const tasksExercise = [
+  { id: 1, done: false },
+  { id: 2, done: false },
+];
+
+const tasksExerciseCopy = tasksExercise.map((task) =>
+  task.id === 2 ? { ...task, done: true } : task,
+);
+
+console.log(tasksExercise[1].done, tasksExerciseCopy[1].done);
+
+// 3. Set `id:2` to `quantity: +1`.
+const cart = [
+  { id: 1, quantity: 1 },
+  { id: 2, quantity: 2 },
+];
+
+const cartCopy = cart.map((item) =>
+  item.id === 2 ? { ...item, quantity: item.quantity + 1 } : item,
+);
+
+console.log(cart[1].quantity, cartCopy[1].quantity);
+
+// 4. Only items with a "paid" status will have their price increased by 20%.
+const orders = [
+  { id: 1, price: 100, status: "paid" },
+  { id: 2, price: 200, status: "pending" },
+];
+
+const ordersPaid = orders
+  .filter((order) => order.status === "paid")
+  .map((order) => ({ ...order, price: changePrice(order.price, 20) }));
+
+console.log(ordersPaid);
+
+// 5. Group by country (reduce)
+const usersExercise2 = [
+  { name: "Anna", country: "Germany" },
+  { name: "John", country: "USA" },
+  { name: "Mike", country: "Germany" },
+];
+
+const groupCountry = usersExercise2.reduce((acc, user) => {
+  const country = user.country;
+
+  // returns a new object
+  return {
+    ...acc,
+    [country]: [...(acc[country] ?? []), user.name],
+  };
+}, {});
+
+console.log(groupCountry);
+
+// ==========================================
+// Reduce Practice 🏋️ (Immutable)
+// ==========================================
+
+// Calculate the total
+const numbersForReduce = [1, 2, 3, 4];
+const totalValue = numbersForReduce.reduce((acc, cur) => acc + cur, 0);
+console.log(totalValue);
+
+// Calculate the total amount
+const productsForReduce = [
+  { id: 1, name: "Laptop", price: 1000, inStock: true },
+  { id: 2, name: "Mouse", price: 50, inStock: false },
+  { id: 3, name: "Keyboard", price: 150, inStock: true },
+  { id: 4, name: "Monitor", price: 300, inStock: false },
+];
+
+const totalAmount = productsForReduce.reduce(
+  (acc, cur) => (cur.inStock ? acc + cur.price : acc),
+  0,
+);
+console.log(totalAmount);
+
+// Count the number of people by country.
+const usersForReduce = [
+  { id: 1, name: "Alice", country: "Germany" },
+  { id: 2, name: "Bob", country: "USA" },
+  { id: 3, name: "Carol", country: "Germany" },
+  { id: 4, name: "Dave", country: "Japan" },
+];
+
+const countUserOfCountry = usersForReduce.reduce((acc, user) => {
+  const country = user.country;
+
+  return {
+    ...acc,
+    [country]: acc[country] ? acc[country] + 1 : 1,
+  };
+}, {});
+console.log(countUserOfCountry);
+
+// Calculate the total amount for each status.
+const ordersForReduce = [
+  { id: 1, status: "paid", amount: 100 },
+  { id: 2, status: "pending", amount: 200 },
+  { id: 3, status: "paid", amount: 200 },
+];
+
+const totalAmountOfStatus = ordersForReduce.reduce((acc, order) => {
+  const status = order.status;
+
+  return {
+    ...acc,
+    [status]: acc[status] ? acc[status] + order.amount : order.amount,
+  };
+}, {});
+
+console.log(totalAmountOfStatus);
+
+// Group by category + Add "product"
+const productsForReduce2 = [
+  { id: 1, name: "MacBook", category: "Electronics" },
+  { id: 2, name: "T-Shirt", category: "Apparel" },
+  { id: 3, name: "Headphones", category: "Electronics" },
+  { id: 4, name: "Jeans", category: "Apparel" },
+];
+
+const productsOfCategory = productsForReduce2.reduce((acc, product) => {
+  const category = product.category;
+
+  return {
+    ...acc,
+    [category]: [...(acc[category] ?? []), product],
+  };
+}, {});
+
+console.log(productsOfCategory);
+
+// Sum the quantity for each ID.
+const cartForReduce = [
+  { id: 1, name: "Apple", quantity: 1 },
+  { id: 2, name: "Banana", quantity: 5 },
+  { id: 1, name: "Apple", quantity: 2 },
+];
+
+const totalQuantityOfId = cartForReduce.reduce(
+  (acc, item) => ({
+    ...acc,
+    // [item.id]: acc[item.id] ? acc[item.id] + item.quantity : item.quantity
+    [item.id]: (acc[item.id] ?? 0) + item.quantity, // ✅ Read easier!
+  }),
+  {},
+);
+
+// MEMO: Mutable
+// const totalQuantityOfId = cartForReduce.reduce((acc, item) => {
+//   const key = item.id;
+//   acc[key] = (acc[key] ?? 0) + item.quantity;
+//   return acc;
+// }, {});
+
+console.log(totalQuantityOfId);

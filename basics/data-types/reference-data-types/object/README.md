@@ -236,6 +236,118 @@ Object.freeze(CONFIG); // Protect data from changing
 console.log(CONFIG.column); // 3
 ```
 
+### Iterating Objects
+
+- Object.keys(obj)
+- Object.values(obj)
+- Object.entries(obj)
+
+> 💡 Often used with map / forEach
+
+### Modern Syntax
+
+- **Optional chaining (?.)**:
+
+  Safely access nested properties. If a property does not exist, it stops and returns undefined instead of throwing an error
+
+- **Nullish coalescing (??)**:
+
+  Returns the right-hand value only when the left-hand value is `null` or `undefined`
+
+- **Destructuring assignment**:
+
+  Split the elements of an object and assign them to multiple variables
+
+- **Spread syntax (...)**:
+
+  Copies properties into a new object (shallow copy) or merges objects
+
+- **Computed property**:
+
+  Use a variable or expression as a dynamic property key
+
+```js
+// Optional Chaining
+const product = {
+  id: 1,
+  name: "Gummibärchen (Klassik)",
+  brand: "Haribo",
+  price: 1.29,
+};
+
+// ❌ Error: cannot read property
+// const category = product.location.productionArea;
+
+// ❌ Can check if the property exist and return value... but LONG!
+// const category = product.location && product.location.productionArea;
+
+// ✅ Return immediately when property does not exist and return undefined
+const category = product.location?.productionArea; // No error will be thrown
+console.log(category); // undefined
+
+// also works with functions
+product.getLocation?.(); // No executed
+
+// Nullish coalescing ??
+const defaultLocation = product.location ?? "main factory"; // set default value
+
+// Appendix || vs ??
+const value1 = 0 || 10; // 10 ❌
+const value2 = 0 ?? 10; // 0  ✅
+
+// Optional Chaining x Nullish coalescing
+const productionArea = product.location?.productionArea ?? "main factory";
+// 💡 Only applies to null or undefined (NOT 0, "", false)
+
+// Destructuring assignment
+// 1. Split properties to same variable names
+const user = {
+  id: 1,
+  firstName: "Max",
+  email: "max0001@example.com",
+  tel: "+0000000000",
+  country: "Germany",
+};
+const { id, firstName, country } = user; // can assign only essential data
+console.log(id, firstName, country);
+
+// 2. Use Destructuring assignment to parameters of function
+// ❌ It violates the DRY principle! user.name/user.country
+// const printUser = function(user) { 💡Can be improve
+//   console.log(`NAME: ${user.name}, COUNTRY: ${user.country}`);
+// };
+
+// ✅ Parameter will be written { property names }
+const printUser = function ({ firstName, country }) {
+  console.log(`[User Info] name: ${firstName}, country: ${country}`);
+};
+
+printUser(user); // [User Info] name: Max, country: Germany
+
+// 3. Default value
+const { nickName = "Guest" } = user;
+console.log(nickName); // Guest
+
+// 4. Rename
+const { firstName: userName } = user;
+console.log(userName); // Max
+
+// Spread syntax(shallow copy)
+const updatedUser = {
+  ...user,
+  email: "max.müller@example.com",
+  country: "Japan",
+};
+
+console.log(updatedUser);
+
+// Computed property
+const key = "email";
+const obj = {
+  [key]: "test@example.com",
+};
+```
+
 ## Files
 
 - index.js

@@ -348,6 +348,178 @@ const obj = {
 };
 ```
 
+## ⚠ Common pitfalls
+
+- Dot Notation CANNOT use a variable
+- Use `this` to access properties inside the same object (DRY!)
+- Mutating objects in Functions
+- Truthiness of Empty Objects
+- The Shallow Copy Trap
+- Comparison of object
+- I want to delete some keys from an object
+- NOT use Arrow Function as methods
+- Code that depends on `order` will break
+
+```js
+const ichiro = {
+  firstName: "ichiro",
+  lastName: "tanaka",
+  birthYear: 1990,
+  sayHello: function () {
+    console.log(`Hello, I am ${this.firstName}`);
+  },
+  calcAge: function () {
+    this.age = currentYear - this.birthYear;
+    return this.age;
+  },
+};
+
+const keyCountry = "country";
+
+// ❌ Dot Notation CANNOT use a variable
+// ichiro.keyCountry = "Japan";
+
+// ✅ Use Bracket Notation for variables
+ichiro[keyCountry] = "Japan";
+
+// ❌ Use 'this' to access properties inside the same object (DRY!)
+const user = {
+  firstName: "Jürgen",
+  sayHello: function () {
+    // console.log(`Hello, I am ${user.firstName}`); ❌ BAD: tightly coupled (hardcoded variable)
+    console.log(`Hello, I am ${this.firstName}`); // ✅ GOOD: dynamic reference
+  },
+};
+
+// Mutating objects in Functions
+// ❌ Munipulates original object
+const currentYear = new Date().getFullYear();
+const updateAge = function (user) {
+  user.age = currentYear - user.birthYear;
+  return user;
+};
+
+// ✅ Returns a new object and does not manipulate original object
+const updateAge = function (user) {
+  return { ...user, age: currentYear - user.birthYear };
+};
+
+// Truthiness of Empty Objects
+const fetchDate = () => ({});
+const result = fetchDate();
+// ❌ {} will be evaluated as a truthy value!!
+// if (result) {
+//   console.log("Finish fetching the data sucsessfully!");
+//   createUser(result.data); // 💣 crash!!
+// } else {
+//   console.log("Something went wrong...");
+// }
+
+// 🆗 1.) Check if object exists with the length of keys
+// ⚠ Even if object exists, properties inside may still be undefined
+if (Object.keys(result).length !== 0) {
+  console.log("Finish fetching the data sucsessfully!");
+  createUser(result.data);
+} else {
+  console.log("Something went wrong...");
+}
+
+// ✅ 2.) RECOMMENDED! Check if object exists with Optinal chaining
+if (result?.data) {
+  console.log("Finish fetching the data sucsessfully!");
+  createUser(result.data);
+} else {
+  console.log("Something went wrong...");
+}
+
+// The Shallow Copy Trap
+// ⚠ Spread syntax only copies ONE level (shallow copy)
+const john = {
+  id: 1,
+  firstName: "John",
+  email: "john.smith@example.com",
+  birthYear: 1988,
+  address: { city: "Berlin" },
+  sayHello: function () {
+    console.log(`Hello! Mey name is ${this.firstName}.`);
+  },
+};
+
+// ❌ Munipulates original object as well,
+// const john2 = { ...john };
+// john2.address.city = 'Tokyo';
+// console.log(john.address.city); // Tokyo, causes side effects (unexpected bugs)
+// console.log(john2.address.city); // Tokyo
+
+const john2 = { ...john, address: { ...john.address, city: "Tokyo" } };
+console.log(john.address.city); // Berlin
+console.log(john2.address.city); // Tokyo
+
+// Comparison of object: Object will be compared with address (reference)
+const obj1 = { a: 1 };
+const obj2 = { a: 1 };
+
+console.log(obj1 === obj2); // false 🙀 Refer to different addresses (references) in memory
+
+// ⚠ Not reliable: order of keys matters, and some values are not serialized
+console.log(JSON.stringify(obj1) === JSON.stringify(obj2)); // true
+// Example
+const a = { x: 1, y: 2 };
+const b = { y: 2, x: 1 };
+console.log(JSON.stringify(a)); // {"x":1,"y":2}
+console.log(JSON.stringify(b)); // {"y":2,"x":1}
+console.log(JSON.stringify(a) === JSON.stringify(b)); // false (Because the order is different!)
+
+// 💡 Appendix: In React, executes RE-render becaus of the changed address in memory
+
+// I want to delete some keys from an object
+const item = {
+  id: 21,
+  productName: "Microwave",
+  amount: 1,
+  price: 60,
+  reviews: 4.8,
+};
+
+// ❌ Manipulates original object
+// delete item.reviews;
+
+const { reviews, ...restOfItem } = item;
+console.log(restOfItem); // { id: 21, productName: 'Microwave', amount: 1, price: 60 }
+
+// NOT use Arrow Function as methods
+const person = {
+  firstName: "Lisa",
+  birthYear: 2002,
+  address: { country: "Germany", city: "Frankfrut" },
+  job: "teacher",
+  // ❌ Arrow functions do NOT have their own 'this' (lexical this)
+  // introduce: () =>{
+  //   console.log(
+  //     `Hi, I am ${this.firstName}.
+  //     I work in ${this.address.city} as a ${this.job}.
+  //     Nice to meet you!`,
+  //   );
+  // }
+  // ✅ Function Ecpression or this way can refer to the object as expected
+  introduce() {
+    console.log(
+      `Hi, I am ${this.firstName}.
+I work in ${this.address.city} as a ${this.job}.
+Nice to meet you!`,
+    );
+  },
+};
+
+person.introduce();
+
+// Code that depends on "order" will break
+const objKeysNum = { 4: "d", 2: "b", 3: "c", 1: "a" };
+console.log(objKeysNum); // { '1': 'a', '2': 'b', '3': 'c', '4': 'd' }
+
+// 💡 An object's key is like a DICTIONARY, not a list (something with a specific order)
+```
+
 ## Files
 
 - index.js

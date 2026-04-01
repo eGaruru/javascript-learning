@@ -160,7 +160,223 @@ console.log(usedCar[keyVehicleCondition]); // Used
 // ------------------------------------------------------------
 // 5) Common Pitfalls (Trap & Solutions)
 // ------------------------------------------------------------
-// Planning
+// - Mutating objects in Functions
+const currentYearPitfall = new Date().getFullYear();
+const originalUser = { name: "Tom", birthYear: 1995 };
+
+// ❌ BAD:
+const updateAgeBad = function (user) {
+  user.age = currentYear - user.birthYear; // Mutating
+  return user;
+};
+
+// ✅ GOOD:
+const updateAgeGood = function (user) {
+  return { ...user, age: currentYearPitfall - user.birthYear };
+};
+
+const updatedUser = updateAgeGood(originalUser);
+console.log(
+  `[Original User Age] ${originalUser.age}, [Updated User Age] ${updatedUser.age}`,
+);
+// Output: [Original User Age] undefined, [Updated User Age] 31
+
+// - The Shallow Copy Trap
+const john = {
+  name: "John",
+  address: { city: "Berlin", zip: "10115" },
+};
+
+// ❌ BAD: spread syntax copies only until one level
+// const john2 = { ...john };
+// john2.address.city = 'Tokyo'; // Munipulates original object as well
+
+// ✅ GOOD:
+const john3 = { ...john, address: { ...john.address, city: "Tokyo" } };
+console.log(
+  `John's city: ${john.address.city}, John3's city: ${john3.address.city}`,
+);
+// Output: John's city: Berlin, John3's city: Tokyo
+
+const state = {
+  user: {
+    name: "Tom",
+    address: {
+      city: "Berlin",
+    },
+  },
+};
+
+// ❌ Bad:
+// const newState = {
+//   ...state,
+// };
+// newState.user.address.city = 'Munich'; // Mutating
+
+// ✅ GOOD:
+const newState = {
+  ...state,
+  user: { ...state.user, address: { ...state.user.address, city: "Munich" } },
+};
+console.log("State: " + state.user.address.city); // State: Berlin
+console.log("New State: " + newState.user.address.city); // New State: Munich
+
+// - Using destructuring as a delete
+const item = { id: 21, productName: "Microwave", price: 60, reviews: 4.8 };
+
+// ❌ BAD:
+// delete item.reviews;
+
+// ✅ GOOD:
+const { reviews, ...restOfItem } = item;
+console.log(restOfItem); // { id: 21, productName: 'Microwave', price: 60 }
+
+// - Using destructuring as a delete
+const userBeforeDelete = {
+  name: "Anna",
+  age: 20,
+};
+
+const { age, ...rest } = userBeforeDelete;
+console.log(userBeforeDelete.age); // 20, original data still has this key-value pair
+
+// ✅ GOOD:
+const userAfterDelete = rest;
+console.log(userAfterDelete); // { name: 'Anna' }
+
+// - Truthiness of Empty Objects
+const fetchResponse = () => ({});
+const response = fetchResponse();
+
+// ❌ BAD:
+if (response) {
+  // console.log(response.data.userId); // 💣 Cannot read properties of undefined
+}
+
+// ✅ GOOD:
+if (response?.data) {
+  console.log("Success:", response.data.userId);
+} else {
+  console.log("Data not found or empty response.");
+}
+
+// - Trap "this" + "destructuring"
+const testUser = {
+  name: "Anna",
+  greet() {
+    return `Hello ${this.name}`;
+  },
+};
+
+// const { greet } = testUser;  destructuring
+// console.log(greet()); Hello undefined or Error throws (Cannot read properties of undefined) in strict mode
+// What is happend? -> The method is called without object that it calls -> "this" is NOT exist
+
+// ✅ GOOD:
+console.log(testUser.greet()); // Hello Anna
+// Alternative:
+const greet = testUser.greet.bind(testUser);
+console.log(greet()); // Hello Anna
+
+// - Mutating with map
+const users = [
+  { name: "A", score: 10 },
+  { name: "B", score: 20 },
+];
+
+// ❌ Bad: Original data is changed in map method
+const updatedUsersBad = users.map((user) => {
+  user.score += 10; // Mutating
+  return user;
+});
+
+// ✅ GOOD:
+const updatedUsersGood = users.map((user) => {
+  return { ...user, score: user.score + 10 }; // returns new object
+});
+
+// - reduce x reference
+const items = [
+  { category: "A", value: 1 },
+  { category: "A", value: 2 },
+];
+
+// ❌ Bad: cases side effect
+// const grouped = items.reduce((acc, item) => {
+//   if (!acc[item.category]) {
+//     acc[item.category] = [];
+//   }
+
+//   acc[item.category].push(item);
+//   return acc;
+// }, {});
+
+// console.log(grouped);
+// grouped['A'][0].value = 999;
+
+// console.log(items[0].value);
+
+// ✅ GOOD:
+const grouped = items.reduce((acc, item) => {
+  // returns new object
+  return {
+    ...acc,
+    [item.category]: [...(acc[item.category] ?? []), { ...item }],
+  };
+}, {});
+
+grouped["A"][0].value = 999;
+
+console.log(items[0].value); // 1
+console.log(grouped); // { A: [ { category: 'A', value: 999 }, { category: 'A', value: 2 } ] }
+
+// - Object comparison
+const a = { x: 1 };
+const b = { x: 1 };
+
+// ❌ Bad: "else" executed, object references to the address in memory
+if (a === b) {
+  console.log("same");
+} else {
+  console.log("different");
+}
+
+// 🆗: But Not all cases can be coverd
+console.log(JSON.stringify(a) === JSON.stringify(b));
+console.log(Object.hasOwn(a, "x") && Object.hasOwn(b, "x") && a.x === b.x);
+
+// - Can NOT aboid error with Optional chaining
+const data = {
+  user: { name: null },
+};
+
+// ❌ Bad: if name is null or undefined, then error throws
+// console.log(data.user?.name.length);
+
+// ✅ GOOD:
+console.log(data.user?.name?.length ?? 0);
+
+// - Trap when setting default value：?? vs ||
+const config = {
+  retryCount: 0,
+};
+
+// ❌ Bad: 0 is falsy value -> assigned 3
+const retryBad = config.retryCount || 3;
+console.log(retryBad); // 3
+
+// ✅ GOOD: ?? applies only null or undefined
+const retryGood = config.retryCount ?? 3;
+console.log(retryGood); // 0
+
+// - Freeze can lock the properties only until one level
+const SETTINGS = {
+  theme: { accentColor: "#FF5ABD", baseColoer: "#6d6d6d" },
+};
+Object.freeze(SETTINGS);
+
+SETTINGS.theme.accentColor = "#4d7777"; // can be changed🙀
+console.log(SETTINGS);
 
 // ------------------------------------------------------------
 // 6) Mini Exercise: Real-World Scenarios

@@ -84,6 +84,83 @@ do {
 // 👉 The loop will always be executed at least once
 ```
 
+### `for` vs `while` vs `do...while`
+
+|            | When                                                                              |
+| :--------- | :-------------------------------------------------------------------------------- |
+| for        | When you know the exact number of iterations or need an index                     |
+| while      | When you do not know the exact number of iterations                               |
+| do...while | When you do not know the exact number of iterations but need to run at least once |
+
+### 💡 Which Loop Should I Use?
+
+1. To transform an array → `map()`
+   - Return a new array
+2. To filter by a condition → `filter()`
+   - Return a new filtered array
+3. To sum, etc. → `reduce()`
+   - Accumulates values into a single result
+4. To only perform side effects → `forEach()`
+   - Does not return a value
+5. To perform a special conditional loop → `while`
+   - Flexible but requires careful condition management
+6. To require an index → `​​for`
+   - Useful for index-based operations
+7. To perform a process at least once → `do...while`
+   - Guarantee at least one execution
+
+### Modern Syntax(ES6+)
+
+These provide cleaner and more readable alternatives to traditional loops
+
+- Not need to update state of variables
+- Not need index to take a value from an array
+
+- **`for...of`**
+  - Get the **values**: For looping iterable objects like **Arrays** (strings, Maps, Sets)
+  - Syntax: `for (variable of iterable) { statement }`
+
+```js
+const numbers = [1, 2, 3, 4];
+for (const num of numbers) {
+  console.log(num);
+}
+// Output:
+// 1
+// 2
+// 3
+// 4
+```
+
+👉 Use `for...of` or array methods (`map`, `forEach`) for arrays instead
+
+- **`for...in`**
+  - Get the **keys**: For looping the enumerable properties of an **Object**
+  - Syntax: `for (variable in object){ statement }`
+
+```js
+const user = { id: 1, firstName: "Jiro", country: "Japan" };
+for (const key in user) {
+  console.log(`[User Info] ${key}: ${user[key]}`);
+}
+// Output:
+// [User Info] id: 1
+// [User Info] firstName: Jiro
+// [User Info] country: Japan
+```
+
+👉 `for...in` is not recommended for arrays because it iterates over keys (indexes as strings)
+
+### ⚠️ Common Pitfalls
+
+- Infinite loops cased by...
+  1. incorrect consitions(especially in `for`)
+  2. forgetting to update loop variables(especially in `while` and `do...while`)
+
+- Use `for...of` and `for...in` appropriately
+  1. `for...of` → **Array**(strings, Maps, Sets)
+  2. `for...in` → **Object**
+
 ## Files
 
 - index.js

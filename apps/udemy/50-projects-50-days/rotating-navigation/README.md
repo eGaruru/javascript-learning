@@ -7,7 +7,7 @@ A small JavaScript application built by following Day 3 of the Udemy course
 
 ## 🎯 Purpose
 
-- Practice DOM manipulation with JavaScript
+- Practice DOM manipulation with vanilla JavaScript
 - Understand event handling in the browser
 - Improve UI behavior implementation step by step
 
@@ -96,5 +96,3 @@ This app was built by following:
 ## 💡 Notes
 
 This project is part of my JavaScript fundamentals training.
-
-- Detailed notes: [`notes/apps/rotating-navigation.md`](../../notes/apps/rotating-navigation.md)

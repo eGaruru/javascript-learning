@@ -92,5 +92,3 @@ This app was built by following:
 ## 💡 Notes
 
 This project is part of my JavaScript fundamentals training.
-
-- Detailed notes: [`notes/apps/split-landing-page.md`](../../notes/apps/split-landing-page.md)

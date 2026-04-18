@@ -7,7 +7,7 @@ A small JavaScript application built by following Day 2 of the Udemy course
 
 ## 🎯 Purpose
 
-- Practice DOM manipulation with JavaScript
+- Practice DOM manipulation with vanilla JavaScript
 - Understand event handling in the browser
 - Improve UI behavior implementation step by step
 
@@ -97,5 +97,3 @@ Generic class names like .active can easily conflict with external elements
 ## 💡 Notes
 
 This project is part of my JavaScript fundamentals training.
-
-- Detailed notes: [`notes/apps/progress-step.md`](../../notes/apps/progress-step.md)

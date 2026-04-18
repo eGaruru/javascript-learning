@@ -89,5 +89,3 @@ This app was built by following:
 ## 💡 Notes
 
 This project is part of my JavaScript fundamentals training.
-
-- Detailed notes: [`notes/apps/scroll-animation.md`](../../notes/apps/scroll-animation.md)

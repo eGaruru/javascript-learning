@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Budget Logic Pro</title>
+  </head>
+  <body>
+    <h1>Budget</h1>
+    <div class="values">
+      <div class="total-value">
+        <h3>Total Incom:</h3>
+        <p id="incom">10000</p>
+      </div>
+      <div class="total-value">
+        <h3>Total Expense:</h3>
+        <p id="expense">10000</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="container-list">
+        <ul id="list">
+          <li>[Category] Note: 金額</li>
+          <li>[Category] Note: 金額</li>
+          <li>[Category] Note: 金額</li>
+          <li>[Category] Note: 金額</li>
+          <li>[Category] Note: 金額</li>
+        </ul>
+      </div>
+
+      <div class="container-input">
+        <p>Please input your income and expenses</p>
+        <form action="">
+          <div class="form-note">
+            <input type="text" />
+            <label>Category</label>
+          </div>
+          <div class="form-note">
+            <input type="text" />
+            <label>Note</label>
+          </div>
+
+          <div class="form-amount">
+            <input type="number" required />
+            <label>Amount</label>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

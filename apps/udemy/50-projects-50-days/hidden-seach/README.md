@@ -101,5 +101,3 @@ This app was built by following:
 ## 💡 Notes
 
 This project is part of my JavaScript fundamentals training.
-
-- Detailed notes: [`notes/apps/hidden-search.md`](../../notes/apps/hidden-search.md)

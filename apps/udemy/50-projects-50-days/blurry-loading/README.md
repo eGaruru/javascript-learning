@@ -107,5 +107,3 @@ This app was built by following:
 ## 💡 Notes
 
 This project is part of my JavaScript fundamentals training.
-
-- Detailed notes: [`notes/apps/blurry-loading.md`](../../notes/apps/blurry-loading.md)

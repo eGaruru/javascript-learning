@@ -42,6 +42,7 @@ expanding-cards/
 ├── style.css
 ├── script.js
 └── README.md
+```
 
 ## ▶️ How to Run
 
@@ -57,6 +58,3 @@ This app was built by following:
 ## 📒 Notes
 
 This project is part of my JavaScript fundamentals training.
-
-- Detailed notes: [`notes/apps/expanding-cards.md`](../../notes/apps/expanding-cards.md)
-```

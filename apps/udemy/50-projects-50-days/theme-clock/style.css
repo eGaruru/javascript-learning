@@ -60,6 +60,42 @@ body {
   height: 200px;
 }
 
+.graduation-hour {
+  background-color: var(--primary-color);
+  width: 2px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    var(--primary-color) 10px,
+    transparent 10px
+  );
+}
+
+.graduation-hour:nth-child(3n - 1) {
+  width: 4px;
+}
+
+.graduation-minute {
+  background-color: var(--primary-color);
+  width: 1px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    var(--primary-color) 1px,
+    transparent 1px
+  );
+}
+
 .needle {
   background-color: var(--primary-color);
   position: absolute;

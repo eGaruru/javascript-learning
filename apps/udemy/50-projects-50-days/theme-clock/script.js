@@ -1,3 +1,4 @@
+const clockEl = document.querySelector('.clock');
 const hourEl = document.querySelector('.hour');
 const minuteEl = document.querySelector('.minute');
 const secondEl = document.querySelector('.second');
@@ -36,6 +37,22 @@ let secondRotates = 0;
 let prevHours = -1;
 let prevMinutes = -1;
 let prevSeconds = -1;
+
+for (let i = 0; i < 12; i++) {
+  const graduation = document.createElement('div');
+  graduation.classList.add('graduation-hour');
+  graduation.style.transform = `translate(-50%, -100%) rotate(${scale(i, 0, 12, 0, 360)}deg)`;
+
+  clockEl.appendChild(graduation);
+}
+
+for (let i = 0; i < 60; i++) {
+  const graduation = document.createElement('div');
+  graduation.classList.add('graduation-minute');
+  graduation.style.transform = `translate(-50%, -100%) rotate(${scale(i, 0, 60, 0, 360)}deg)`;
+
+  clockEl.appendChild(graduation);
+}
 
 toggleEl.addEventListener('click', (e) => {
   const html = document.querySelector('html');

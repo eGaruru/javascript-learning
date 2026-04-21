@@ -29,6 +29,14 @@ const months = [
   'Dec',
 ];
 
+let hoursRotates = 0;
+let minutesRotates = 0;
+let secondRotates = 0;
+
+let prevHours = -1;
+let prevMinutes = -1;
+let prevSeconds = -1;
+
 toggleEl.addEventListener('click', (e) => {
   const html = document.querySelector('html');
   if (html.classList.contains('dark')) {
@@ -51,11 +59,32 @@ function setTime() {
   const seconds = time.getSeconds();
   const ampm = hours >= 12 ? 'PM' : 'AM';
 
-  hourEl.style.transform = `translate(-50%, -100%) rotate(${scale(hoursForClock, 0, 11, 0, 360)}deg)`;
+  // 💡 Reference of Udemy question //
+  // https://www.udemy.com/course/50-projects-50-days/learn/lecture/23596744#questions/13515994
+  // Another clock spin fix: by Lucas Rodrigues
+  /*
+  hourEl.style.transition = `${hours === 0 ? 'none' : 'all 0.5s ease-in'}`;
+  minuteEl.style.transition = `${minutes === 0 ? 'none' : 'all 0.5s ease-in'}`;
+  secondEl.style.transition = `${seconds === 0 ? 'none' : 'all 0.5s ease-in'}`;
+  */
 
-  minuteEl.style.transform = `translate(-50%, -100%) rotate(${scale(minutes, 0, 59, 0, 360)}deg)`;
+  if (prevHours > hoursForClock) hoursRotates++;
+  if (prevMinutes > minutes) minutesRotates++;
+  if (prevSeconds > seconds) secondRotates++;
 
-  secondEl.style.transform = `translate(-50%, -100%) rotate(${scale(seconds, 0, 59, 0, 360)}deg)`;
+  prevHours = hoursForClock;
+  prevMinutes = minutes;
+  prevSeconds = seconds;
+
+  const hoursDeg = scale(hoursForClock, 0, 12, 0, 360) + 360 * hoursRotates;
+  const minutesDeg = scale(minutes, 0, 60, 0, 360) + 360 * minutesRotates;
+  const secondsDeg = scale(seconds, 0, 60, 0, 360) + 360 * secondRotates;
+
+  hourEl.style.transform = `translate(-50%, -100%) rotate(${hoursDeg}deg)`;
+
+  minuteEl.style.transform = `translate(-50%, -100%) rotate(${minutesDeg}deg)`;
+
+  secondEl.style.transform = `translate(-50%, -100%) rotate(${secondsDeg}deg)`;
 
   const formattedMinutes = String(minutes).padStart(2, '0');
   timeEl.innerHTML = `${hoursForClock}:${formattedMinutes} ${ampm}`;

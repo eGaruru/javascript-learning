@@ -1,12 +1,16 @@
-const fill = document.querySelector('.fill');
+const fills = document.querySelectorAll('.fill');
 const empries = document.querySelectorAll('.empty');
+const trashBoxEl = document.getElementById('trash-box');
 
-fill.addEventListener('dragstart', dragStart);
-fill.addEventListener('dragend', dragEnd);
-// fill.addEventListener('dragover', dragOver);
-// fill.addEventListener('dragenter', dragEnter);
-// fill.addEventListener('dragleave', dragLeave);
-// fill.addEventListener('dragdrop', dragDrop);
+for (const fill of fills) {
+  fill.addEventListener('dragstart', dragStart);
+  fill.addEventListener('dragend', dragEnd);
+}
+
+trashBoxEl.addEventListener('dragover', dragOver);
+trashBoxEl.addEventListener('dragenter', dragEnterTrash);
+trashBoxEl.addEventListener('dragleave', dragLeaveTrash);
+trashBoxEl.addEventListener('drop', dragDropTrash);
 
 for (const empty of empries) {
   empty.addEventListener('dragover', dragOver);
@@ -15,7 +19,11 @@ for (const empty of empries) {
   empty.addEventListener('drop', dragDrop);
 }
 
+let draggedItem = null;
+
 function dragStart() {
+  draggedItem = this;
+
   this.className += ' hold';
   // To take time to add hold class
   setTimeout(() => (this.className = 'invisible'), 0);
@@ -40,5 +48,24 @@ function dragLeave() {
 
 function dragDrop() {
   this.className = 'empty';
-  this.append(fill);
+  this.append(draggedItem);
+  draggedItem = null;
+}
+
+function dragEnterTrash(e) {
+  e.preventDefault();
+  this.classList.add('trash-hovered');
+}
+
+function dragLeaveTrash() {
+  this.classList.remove('trash-hovered');
+}
+
+function dragDropTrash(e) {
+  this.classList.remove('trash-hovered');
+
+  if (draggedItem) {
+    draggedItem.remove();
+    draggedItem = null;
+  }
 }

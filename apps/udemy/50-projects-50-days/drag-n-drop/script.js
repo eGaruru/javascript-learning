@@ -1,5 +1,5 @@
 const fills = document.querySelectorAll('.fill');
-const empries = document.querySelectorAll('.empty');
+const empties = document.querySelectorAll('.empty');
 const trashBoxEl = document.getElementById('trash-box');
 
 for (const fill of fills) {
@@ -12,7 +12,7 @@ trashBoxEl.addEventListener('dragenter', dragEnterTrash);
 trashBoxEl.addEventListener('dragleave', dragLeaveTrash);
 trashBoxEl.addEventListener('drop', dragDropTrash);
 
-for (const empty of empries) {
+for (const empty of empties) {
   empty.addEventListener('dragover', dragOver);
   empty.addEventListener('dragenter', dragEnter);
   empty.addEventListener('dragleave', dragLeave);

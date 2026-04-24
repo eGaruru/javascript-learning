@@ -21,16 +21,24 @@ for (const empty of empries) {
 
 let draggedItem = null;
 
-function dragStart() {
-  draggedItem = this;
+function dragStart(e) {
+  const currentTarget = e.currentTarget;
 
-  this.className += ' hold';
+  draggedItem = currentTarget;
+
+  currentTarget.classList.add('hold');
   // To take time to add hold class
-  setTimeout(() => (this.className = 'invisible'), 0);
+  setTimeout(() => {
+    currentTarget.classList.remove('fill', 'hold');
+    currentTarget.classList.add('invisible');
+  }, 0);
 }
 
-function dragEnd() {
-  this.className = 'fill';
+function dragEnd(e) {
+  const currentTarget = e.currentTarget;
+
+  currentTarget.classList.remove('invisible');
+  currentTarget.classList.add('fill');
 }
 
 function dragOver(e) {
@@ -39,30 +47,33 @@ function dragOver(e) {
 
 function dragEnter(e) {
   e.preventDefault();
-  this.className += ' hovered';
+  e.currentTarget.classList.add('hovered');
 }
 
-function dragLeave() {
-  this.className = 'empty';
+function dragLeave(e) {
+  e.currentTarget.classList.remove('hovered');
 }
 
-function dragDrop() {
-  this.className = 'empty';
-  this.append(draggedItem);
+function dragDrop(e) {
+  const currentTarget = e.currentTarget;
+
+  currentTarget.classList.remove('hovered');
+  currentTarget.classList.add('empty');
+  currentTarget.append(draggedItem);
   draggedItem = null;
 }
 
 function dragEnterTrash(e) {
   e.preventDefault();
-  this.classList.add('trash-hovered');
+  e.currentTarget.classList.add('trash-hovered');
 }
 
-function dragLeaveTrash() {
-  this.classList.remove('trash-hovered');
+function dragLeaveTrash(e) {
+  e.currentTarget.classList.remove('trash-hovered');
 }
 
 function dragDropTrash(e) {
-  this.classList.remove('trash-hovered');
+  e.currentTarget.classList.remove('trash-hovered');
 
   if (draggedItem) {
     draggedItem.remove();

@@ -105,9 +105,21 @@ function dragLeave(e) {
 
 function dragDrop(e) {
   const currentTarget = e.currentTarget;
+  const parentEmpty = draggedItem.parentElement;
+
+  const prevfill = e.currentTarget.querySelector('.fill');
+  if (prevfill) {
+    parentEmpty.append(prevfill);
+  } else {
+    restoreUploadIcon(parentEmpty);
+  }
 
   currentTarget.classList.remove('hovered');
   currentTarget.classList.add('empty');
+
+  const prevIcon = currentTarget.querySelector('.upload-icon');
+  if (prevIcon) prevIcon.remove();
+
   currentTarget.append(draggedItem);
   draggedItem = null;
 }
@@ -125,7 +137,18 @@ function dragDropTrash(e) {
   e.currentTarget.classList.remove('trash-hovered');
 
   if (draggedItem) {
+    const parentEmpty = draggedItem.parentElement;
+    restoreUploadIcon(parentEmpty);
+
     draggedItem.remove();
     draggedItem = null;
   }
+}
+
+// --- Helper --- //
+function restoreUploadIcon(targetEl) {
+  const iconEl = document.createElement('i');
+  iconEl.classList.add('fa-solid', 'fa-plus', 'upload-icon');
+  iconEl.addEventListener('click', clickUploadIcon);
+  targetEl.append(iconEl);
 }

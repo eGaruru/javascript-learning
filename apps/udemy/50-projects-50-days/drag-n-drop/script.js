@@ -1,6 +1,8 @@
 const fills = document.querySelectorAll('.fill');
 const empties = document.querySelectorAll('.empty');
 const trashBoxEl = document.getElementById('trash-box');
+const fileInputEl = document.getElementById('file-input');
+const uploadIcons = document.querySelectorAll('.upload-icon');
 
 for (const fill of fills) {
   fill.addEventListener('dragstart', dragStart);
@@ -19,7 +21,53 @@ for (const empty of empties) {
   empty.addEventListener('drop', dragDrop);
 }
 
+for (const icon of uploadIcons) {
+  icon.addEventListener('click', clickUploadIcon);
+}
+
+fileInputEl.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+
+  if (!file) {
+    alert('No file selected. Please try again.');
+    uploadTarget = null;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const fillNew = document.createElement('div');
+    fillNew.classList.add('fill');
+    fillNew.setAttribute('draggable', 'true');
+    fillNew.style.backgroundImage = `url('${reader.result}')`;
+
+    fillNew.addEventListener('dragstart', dragStart);
+    fillNew.addEventListener('dragend', dragEnd);
+
+    uploadTarget.replaceChildren();
+    uploadTarget.append(fillNew);
+
+    uploadTarget = null;
+    fileInputEl.value = '';
+  };
+
+  reader.readAsDataURL(file);
+});
+
+fileInputEl.addEventListener('cancel', () => {
+  uploadTarget = null;
+  return;
+});
+
 let draggedItem = null;
+let uploadTarget = null;
+
+function clickUploadIcon(e) {
+  const emptyEl = e.currentTarget.parentElement;
+  if (emptyEl.querySelector('fill')) return;
+
+  uploadTarget = emptyEl;
+  fileInputEl.click();
+}
 
 function dragStart(e) {
   const currentTarget = e.currentTarget;

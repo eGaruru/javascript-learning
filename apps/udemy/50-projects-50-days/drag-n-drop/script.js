@@ -19,10 +19,12 @@ for (const empty of empties) {
   empty.addEventListener('dragenter', dragEnter);
   empty.addEventListener('dragleave', dragLeave);
   empty.addEventListener('drop', dragDrop);
-}
-
-for (const icon of uploadIcons) {
-  icon.addEventListener('click', clickUploadIcon);
+  empty.addEventListener('click', (e) => {
+    if (e.target.classList.contains('upload-icon')) {
+      uploadTarget = e.currentTarget;
+      fileInputEl.click();
+    }
+  });
 }
 
 fileInputEl.addEventListener('change', (e) => {
@@ -61,14 +63,6 @@ fileInputEl.addEventListener('cancel', () => {
 
 let draggedItem = null;
 let uploadTarget = null;
-
-function clickUploadIcon(e) {
-  const emptyEl = e.currentTarget.parentElement;
-  if (emptyEl.querySelector('.fill')) return;
-
-  uploadTarget = emptyEl;
-  fileInputEl.click();
-}
 
 function dragStart(e) {
   const currentTarget = e.currentTarget;
@@ -149,6 +143,5 @@ function dragDropTrash(e) {
 function restoreUploadIcon(targetEl) {
   const iconEl = document.createElement('i');
   iconEl.classList.add('fa-solid', 'fa-plus', 'upload-icon');
-  iconEl.addEventListener('click', clickUploadIcon);
   targetEl.append(iconEl);
 }

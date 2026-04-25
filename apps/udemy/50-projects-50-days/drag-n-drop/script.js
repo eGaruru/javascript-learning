@@ -31,6 +31,7 @@ fileInputEl.addEventListener('change', (e) => {
   if (!file) {
     alert('No file selected. Please try again.');
     uploadTarget = null;
+    return;
   }
 
   const reader = new FileReader();
@@ -63,7 +64,7 @@ let uploadTarget = null;
 
 function clickUploadIcon(e) {
   const emptyEl = e.currentTarget.parentElement;
-  if (emptyEl.querySelector('fill')) return;
+  if (emptyEl.querySelector('.fill')) return;
 
   uploadTarget = emptyEl;
   fileInputEl.click();

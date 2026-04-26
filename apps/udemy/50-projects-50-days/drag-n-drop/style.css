@@ -56,6 +56,10 @@ header {
   border-style: dashed;
 }
 
+.empty:has(.fill) .upload-icon {
+  display: none;
+}
+
 .upload-icon {
   cursor: pointer;
   font-size: 30px;

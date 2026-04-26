@@ -2,7 +2,6 @@ const fills = document.querySelectorAll('.fill');
 const empties = document.querySelectorAll('.empty');
 const trashBoxEl = document.getElementById('trash-box');
 const fileInputEl = document.getElementById('file-input');
-const uploadIcons = document.querySelectorAll('.upload-icon');
 
 for (const fill of fills) {
   fill.addEventListener('dragstart', dragStart);
@@ -46,7 +45,9 @@ fileInputEl.addEventListener('change', (e) => {
     fillNew.addEventListener('dragstart', dragStart);
     fillNew.addEventListener('dragend', dragEnd);
 
-    uploadTarget.replaceChildren();
+    const prevFill = uploadTarget.querySelector('.fill');
+    if (prevFill) prevFill.remove();
+
     uploadTarget.append(fillNew);
 
     uploadTarget = null;
@@ -102,18 +103,9 @@ function dragDrop(e) {
   const parentEmpty = draggedItem.parentElement;
 
   const prevfill = e.currentTarget.querySelector('.fill');
-  if (prevfill) {
-    parentEmpty.append(prevfill);
-  } else {
-    restoreUploadIcon(parentEmpty);
-  }
+  if (prevfill) parentEmpty.append(prevfill);
 
   currentTarget.classList.remove('hovered');
-  currentTarget.classList.add('empty');
-
-  const prevIcon = currentTarget.querySelector('.upload-icon');
-  if (prevIcon) prevIcon.remove();
-
   currentTarget.append(draggedItem);
   draggedItem = null;
 }
@@ -131,17 +123,7 @@ function dragDropTrash(e) {
   e.currentTarget.classList.remove('trash-hovered');
 
   if (draggedItem) {
-    const parentEmpty = draggedItem.parentElement;
-    restoreUploadIcon(parentEmpty);
-
     draggedItem.remove();
     draggedItem = null;
   }
-}
-
-// --- Helper --- //
-function restoreUploadIcon(targetEl) {
-  const iconEl = document.createElement('i');
-  iconEl.classList.add('fa-solid', 'fa-plus', 'upload-icon');
-  targetEl.append(iconEl);
 }

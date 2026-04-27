@@ -3,15 +3,28 @@ const increaseBtn = document.getElementById('increase');
 const decreaseBtn = document.getElementById('decrease');
 const sizeEL = document.getElementById('size');
 const colorEl = document.getElementById('color');
+const toolBtn = document.getElementById('tool');
 const clearEl = document.getElementById('clear');
 
 const ctx = canvas.getContext('2d');
+
+const TOOLS = {
+  pen: {
+    icon: '<i class="fa-solid fa-pen" data-tool="pen"></i>',
+    composite: 'source-over',
+  },
+  eraser: {
+    icon: '<i class="fa-solid fa-eraser" data-tool="eraser"></i>',
+    composite: 'destination-out',
+  },
+};
 
 let size = 10;
 let color = 'black';
 let isPressed = false;
 let x;
 let y;
+let tool = 'pen';
 
 canvas.addEventListener('mousedown', (e) => {
   isPressed = true;
@@ -60,6 +73,10 @@ function updateSizeOnScreen() {
   sizeEL.innerText = size;
 }
 
+function updatePainterTypeOnScreen() {
+  toolBtn.innerHTML = TOOLS[tool].icon;
+}
+
 increaseBtn.addEventListener('click', () => {
   size += 5;
 
@@ -82,6 +99,18 @@ decreaseBtn.addEventListener('click', () => {
 
 colorEl.addEventListener('change', (e) => (color = e.target.value));
 
+toolBtn.addEventListener('click', () => {
+  const isPen = tool === 'pen';
+  tool = isPen ? 'eraser' : 'pen';
+
+  applyTool();
+  updatePainterTypeOnScreen();
+});
+
 clearEl.addEventListener('click', () =>
   ctx.clearRect(0, 0, canvas.width, canvas.height),
 );
+
+function applyTool() {
+  ctx.globalCompositeOperation = TOOLS[tool].composite;
+}

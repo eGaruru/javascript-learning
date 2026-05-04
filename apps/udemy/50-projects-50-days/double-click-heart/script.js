@@ -25,8 +25,8 @@ const createHeart = (e) => {
   const x = e.clientX;
   const y = e.clientY;
 
-  const leftOffset = e.target.offsetLeft;
-  const topOffset = e.target.offsetTop;
+  const leftOffset = e.currentTarget.offsetLeft;
+  const topOffset = e.currentTarget.offsetTop;
 
   const xInside = x - leftOffset;
   const yInside = y - topOffset;

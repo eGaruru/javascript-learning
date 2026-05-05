@@ -1,12 +1,16 @@
 const textEl = document.getElementById('text');
+const form = document.getElementById('input-text');
+const writingEl = document.getElementById('writing');
 const speedEl = document.getElementById('speed');
-const text = 'We Love Programming!';
+
+let currentText = 'We Love Programming!';
 let idx = 1;
 let speed = 300 / speedEl.value;
+let timeoutId = null;
 
-writeText();
+writeText(currentText);
 
-function writeText() {
+function writeText(text) {
   textEl.innerText = text.slice(0, idx);
 
   idx++;
@@ -15,7 +19,16 @@ function writeText() {
     idx = 1;
   }
 
-  setTimeout(writeText, speed);
+  if (timeoutId) clearTimeout(timeoutId);
+  timeoutId = setTimeout(() => writeText(text), speed);
 }
 
-speedEl.addEventListener('input', (e) => (speed = 300 / e.target.value));
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const newText = writingEl.value;
+  if (!newText) return;
+  currentText = newText;
+  idx = 1;
+  speed = 300 / speedEl.value;
+  writeText(newText);
+});

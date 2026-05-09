@@ -34,7 +34,4 @@ function runAnimation() {
   });
 }
 
-replay.addEventListener('click', () => {
-  resetDOM();
-  runAnimation();
-});
+replay.addEventListener('click', () => resetDOM());

@@ -4,19 +4,16 @@ const listItems = document.querySelectorAll('nav ul li');
 
 listItems.forEach((item, idx) => {
   item.addEventListener('click', () => {
-    reset();
+    resetActiveState();
+
     item.classList.add('active');
     contents[idx].classList.add('show');
   });
 });
 
-function reset() {
-  removeClass(contents, 'show');
-  removeClass(listItems, 'active');
-}
-
-function removeClass(elements, className) {
-  elements.forEach((el) => el.classList.remove(className));
+function resetActiveState() {
+  document.querySelector('.content.show')?.classList.remove('show');
+  document.querySelector('nav ul li.active')?.classList.remove('active');
 }
 
 // Brad's code

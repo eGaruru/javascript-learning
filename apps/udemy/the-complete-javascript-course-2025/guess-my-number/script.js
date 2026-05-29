@@ -22,6 +22,7 @@ const highScoreEl = document.querySelector('.highscore');
 let secretNumber = getSecretNumber();
 let score = INITIAL_SCORE;
 let highScore = INITIAL_HIGH_SCORE;
+let isEndGame = false;
 
 function getRandomNumber(min, max) {
   return Math.trunc(Math.random() * max) + min;
@@ -37,6 +38,12 @@ const changeTextContent = function (el) {
   };
 };
 
+const setGameState = function (ended) {
+  isEndGame = ended;
+  guessEl.disabled = ended;
+  checkBtn.disabled = ended;
+};
+
 const displayMessage = changeTextContent(messageEl);
 const displayNumber = changeTextContent(numberEl);
 const displayScore = changeTextContent(scoreEl);
@@ -45,6 +52,8 @@ const displayHighScore = changeTextContent(highScoreEl);
 const checkBtn = document.querySelector('.check');
 
 checkBtn.addEventListener('click', function () {
+  if (isEndGame) return;
+
   const guess = Number(guessEl.value);
 
   // When there is no input
@@ -58,6 +67,8 @@ checkBtn.addEventListener('click', function () {
 
     body.classList.add('win');
 
+    setGameState(true);
+
     if (score > highScore) {
       highScore = score;
       displayHighScore(highScore);
@@ -70,6 +81,7 @@ checkBtn.addEventListener('click', function () {
     } else {
       displayMessage(MESSAGES.lostGame);
       displayScore(0);
+      setGameState(true);
     }
   }
 });
@@ -79,6 +91,7 @@ const againBtn = document.querySelector('.again');
 againBtn.addEventListener('click', function () {
   score = INITIAL_SCORE;
   secretNumber = getSecretNumber();
+  setGameState(false);
 
   displayMessage(MESSAGES.initial);
   displayScore(score);

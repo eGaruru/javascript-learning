@@ -2,10 +2,6 @@
 
 const INITIAL_SCORE = 20;
 const INITIAL_HIGH_SCORE = 0;
-const COLOR_CORRECT = '#60b347';
-const COLOR_NORMAL = '#222';
-const WIDTH_CORRECT = '30rem';
-const WIDTH_NORMAL = '15rem';
 
 const MESSAGES = {
   initial: 'Start guessing...',
@@ -60,8 +56,7 @@ checkBtn.addEventListener('click', function () {
     displayMessage(MESSAGES.correct);
     displayNumber(secretNumber);
 
-    body.style.backgroundColor = COLOR_CORRECT;
-    numberEl.style.width = WIDTH_CORRECT;
+    body.classList.add('win');
 
     if (score > highScore) {
       highScore = score;
@@ -90,6 +85,5 @@ againBtn.addEventListener('click', function () {
   displayNumber('?');
 
   guessEl.value = '';
-  body.style.backgroundColor = COLOR_NORMAL;
-  numberEl.style.width = WIDTH_NORMAL;
+  body.classList.remove('win');
 });

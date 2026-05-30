@@ -92,7 +92,10 @@ checkBtn.addEventListener('click', function () {
       displayScore(score);
     } else {
       displayMessage(MESSAGES.lostGame);
+      displayNumber(secretNumber);
       displayScore(0);
+      body.classList.add('game-over');
+
       setGameState(true);
     }
   }
@@ -112,4 +115,5 @@ againBtn.addEventListener('click', function () {
   guessEl.value = '';
   guessEl.focus();
   body.classList.remove('win');
+  body.classList.remove('game-over');
 });

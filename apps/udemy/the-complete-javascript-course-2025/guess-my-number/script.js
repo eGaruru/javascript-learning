@@ -6,6 +6,7 @@ const INITIAL_HIGH_SCORE = 0;
 const MESSAGES = {
   initial: 'Start guessing...',
   noInput: '⛔ No number!',
+  outOfRange: '⛔ Invalid number!',
   correct: '🎉 Correct Number',
   tooHigh: '📈 Too high!',
   tooLow: '📉 Too low!',
@@ -59,9 +60,20 @@ checkBtn.addEventListener('click', function () {
   // When there is no input
   if (!guess) {
     displayMessage(MESSAGES.noInput);
+    guessEl.focus();
+    return;
+  }
 
-    // When player wins
-  } else if (guess === secretNumber) {
+  // When user inputs the invalid number
+  if (guess < 0 || guess > 20) {
+    displayMessage(MESSAGES.outOfRange);
+    guessEl.value = '';
+    guessEl.focus();
+    return;
+  }
+
+  // When player wins
+  if (guess === secretNumber) {
     displayMessage(MESSAGES.correct);
     displayNumber(secretNumber);
 
@@ -98,5 +110,6 @@ againBtn.addEventListener('click', function () {
   displayNumber('?');
 
   guessEl.value = '';
+  guessEl.focus();
   body.classList.remove('win');
 });

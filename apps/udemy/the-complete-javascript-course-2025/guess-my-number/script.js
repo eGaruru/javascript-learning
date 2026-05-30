@@ -45,12 +45,27 @@ const setGameState = function (ended) {
   checkBtn.disabled = ended;
 };
 
+const init = function () {
+  score = INITIAL_SCORE;
+  secretNumber = getSecretNumber();
+  setGameState(false);
+
+  displayMessage(MESSAGES.initial);
+  displayScore(score);
+  displayNumber('?');
+
+  guessEl.value = '';
+  guessEl.focus();
+  body.classList.remove('win', 'game-over');
+};
+
 const displayMessage = changeTextContent(messageEl);
 const displayNumber = changeTextContent(numberEl);
 const displayScore = changeTextContent(scoreEl);
 const displayHighScore = changeTextContent(highScoreEl);
 
 const checkBtn = document.querySelector('.check');
+const againBtn = document.querySelector('.again');
 
 checkBtn.addEventListener('click', function () {
   if (isEndGame) return;
@@ -101,19 +116,5 @@ checkBtn.addEventListener('click', function () {
   }
 });
 
-const againBtn = document.querySelector('.again');
-
-againBtn.addEventListener('click', function () {
-  score = INITIAL_SCORE;
-  secretNumber = getSecretNumber();
-  setGameState(false);
-
-  displayMessage(MESSAGES.initial);
-  displayScore(score);
-  displayNumber('?');
-
-  guessEl.value = '';
-  guessEl.focus();
-  body.classList.remove('win');
-  body.classList.remove('game-over');
-});
+init();
+againBtn.addEventListener('click', init);

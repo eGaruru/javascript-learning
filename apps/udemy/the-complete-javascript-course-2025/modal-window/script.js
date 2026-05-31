@@ -37,12 +37,15 @@ const openModal = function () {
   overlay.classList.remove('hidden');
 };
 
+// Use button element for event listener
 btnsOpenModal.forEach((btn, i) => {
-  if (!MODAL_DATA[i]) return;
+  btn.addEventListener('click', () => {
+    if (!MODAL_DATA[i]) return;
 
-  title.textContent = MODAL_DATA[i].title;
-  content.textContent = MODAL_DATA[i].content;
-  openModal();
+    title.textContent = MODAL_DATA[i].title;
+    content.textContent = MODAL_DATA[i].content;
+    openModal();
+  });
 });
 
 const closeModal = function () {

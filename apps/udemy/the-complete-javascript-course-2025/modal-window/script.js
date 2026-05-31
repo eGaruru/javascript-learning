@@ -23,6 +23,7 @@ const MODAL_DATA = [
   },
 ];
 
+const body = document.querySelector('body');
 const modal = document.querySelector('.modal');
 const title = modal.querySelector('h1');
 const content = modal.querySelector('p');
@@ -37,16 +38,30 @@ const openModal = function () {
   overlay.classList.remove('hidden');
 };
 
-// Use button element for event listener
-btnsOpenModal.forEach((btn, i) => {
-  btn.addEventListener('click', () => {
-    if (!MODAL_DATA[i]) return;
+// Use parent element for event listener
+body.addEventListener('click', function (e) {
+  const target = e.target;
+  if (target.classList.contains('show-modal')) {
+    const index = target.dataset.modalIndex - 1;
 
-    title.textContent = MODAL_DATA[i].title;
-    content.textContent = MODAL_DATA[i].content;
+    if (!MODAL_DATA[index]) return;
+
+    title.textContent = MODAL_DATA[index].title;
+    content.textContent = MODAL_DATA[index].content;
     openModal();
-  });
+  }
 });
+
+// Use button element for event listener
+// btnsOpenModal.forEach((btn, i) => {
+//   btn.addEventListener('click', () => {
+//     if (!MODAL_DATA[i]) return;
+
+//     title.textContent = MODAL_DATA[i].title;
+//     content.textContent = MODAL_DATA[i].content;
+//     openModal();
+//   });
+// });
 
 const closeModal = function () {
   modal.classList.add('hidden');

@@ -4,7 +4,7 @@ const amountEl_one = document.getElementById('amount-one');
 const amountEl_two = document.getElementById('amount-two');
 
 const rateEl = document.getElementById('rate');
-const swapEl = document.getElementById('swap');
+const swap = document.getElementById('swap');
 
 // Fetch exchange rates and update the DOM
 function calculate() {
@@ -17,7 +17,9 @@ function calculate() {
       // console.log(data);
       const rate = data.rates[currency_two] / data.rates[currency_one];
 
-      rateEl.innerText = ``;
+      rateEl.innerText = `1 ${currency_one} = ${rate} ${currency_two}`;
+
+      amountEl_two.value = (amountEl_one.value * rate).toFixed(2);
     });
 }
 
@@ -27,6 +29,11 @@ amountEl_one.addEventListener('input', calculate);
 currencyEl_two.addEventListener('change', calculate);
 amountEl_two.addEventListener('input', calculate);
 
-calculate();
+swap.addEventListener('click', () => {
+  const temp = currencyEl_one.value;
+  currencyEl_one.value = currencyEl_two.value;
+  currencyEl_two.value = temp;
+  calculate();
+});
 
-// https://api.exchangeratesapi.io/latest?base=${currency_one}
+calculate();

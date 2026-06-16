@@ -4,10 +4,10 @@ const filter = document.getElementById('filter');
 
 let limit = 6;
 let page = 1;
+let isLoading = false;
 
 // Fetch posts from API
 async function getPosts() {
-  console.log(limit, page);
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}`,
   );
@@ -37,26 +37,33 @@ async function showPosts() {
 
 // Show loader & fetch more posts
 function showLoading() {
+  if (isLoading) return;
+
   loading.classList.add('show');
+  page++;
+  isLoading = true;
 
-  setTimeout(() => {
+  setTimeout(async () => {
+    await showPosts();
     loading.classList.remove('show');
-
-    setTimeout(() => {
-      page++;
-      showPosts();
-    }, 300);
+    isLoading = false;
   }, 1000);
 }
 
 // Filter posts by input
 function filterPosts(e) {
-  const term = e.target.value.toUpperCase();
+  const term = e.target.value.trim().toUpperCase();
   const posts = document.querySelectorAll('.post');
 
   posts.forEach((post) => {
-    const title = post.querySelector('.post-title').innerText.toUpperCase();
-    const body = post.querySelector('.post-body').innerText.toUpperCase();
+    const title = post
+      .querySelector('.post-title')
+      .innerText.trim()
+      .toUpperCase();
+    const body = post
+      .querySelector('.post-body')
+      .innerText.trim()
+      .toUpperCase();
 
     if (title.indexOf(term) > -1 || body.indexOf(term) > -1) {
       post.style.display = 'flex';

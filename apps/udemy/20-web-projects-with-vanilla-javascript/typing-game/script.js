@@ -119,7 +119,7 @@ text.addEventListener('input', (e) => {
       time += 5;
     }
 
-    updateTime();
+    timeEl.innerText = time + 's';
   }
 });
 

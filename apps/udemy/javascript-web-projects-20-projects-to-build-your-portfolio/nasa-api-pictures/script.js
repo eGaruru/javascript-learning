@@ -12,6 +12,18 @@ const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${co
 let resultsArray = [];
 let favorites = {};
 
+function showContent(page) {
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  if (page === 'results') {
+    resultsNav.classList.remove('hidden');
+    favoritesNav.classList.add('hidden');
+  } else {
+    resultsNav.classList.add('hidden');
+    favoritesNav.classList.remove('hidden');
+  }
+  loader.classList.add('hidden');
+}
+
 function createDOMNodes(page) {
   const currentArray =
     page === 'results' ? resultsArray : Object.values(favorites);
@@ -79,26 +91,19 @@ function updateDOM(page) {
   }
   imagesContainer.textContent = '';
   createDOMNodes(page);
+  showContent(page);
 }
 
 // Get 10 Images from NASA API
 async function getNasaPictures() {
+  // Show Loader
+  loader.classList.remove('hidden');
   try {
     const response = await fetch(apiUrl);
     resultsArray = await response.json();
-    updateDOM('favorites');
+    updateDOM('results');
   } catch (error) {
     // Catch Error Here
-  }
-}
-
-// Remove item from Favorites
-function removeFavorite(itemUrl) {
-  if (favorites[itemUrl]) {
-    delete favorites[itemUrl];
-    // Set Favorites in localStorage
-    localStorage.setItem('nasaFavorites', JSON.stringify(favorites));
-    updateDOM('favorites');
   }
 }
 
@@ -117,6 +122,16 @@ function saveFavorite(itemUrl) {
       localStorage.setItem('nasaFavorites', JSON.stringify(favorites));
     }
   });
+}
+
+// Remove item from Favorites
+function removeFavorite(itemUrl) {
+  if (favorites[itemUrl]) {
+    delete favorites[itemUrl];
+    // Set Favorites in localStorage
+    localStorage.setItem('nasaFavorites', JSON.stringify(favorites));
+    updateDOM('favorites');
+  }
 }
 
 // On Load
